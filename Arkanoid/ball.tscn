@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cqj5ewugug2ji"]
+
+[ext_resource type="Script" path="res://Ball.cs" id="1_l2sta"]
+[ext_resource type="Texture2D" uid="uid://c4u3mjf5ot8os" path="res://sprites/ball.png" id="1_lbhr1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s70fp"]
+radius = 15.0333
+
+[node name="Ball" type="CharacterBody2D"]
+script = ExtResource("1_l2sta")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_lbhr1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_s70fp")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="OnScreenExited"]
