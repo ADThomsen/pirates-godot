@@ -2,19 +2,6 @@
 
 Vi koder spil med Godot game engine.
 
-<style>
-details {
-    border:1px solid #ddd;
-    border-radius:5px;
-    padding:10px;
-    margin-bottom:10px;
-}
-summary {
-    font-weight: bold;
-    font-size: 1.2em;
-}
-</style>
-
 <details>
     <summary>Installation</summary>
 
