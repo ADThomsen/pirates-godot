@@ -18,7 +18,7 @@ Det første vi skal lave er en simpel udgave af spillet [Arkanoid](https://en.wi
 <details>
     <summary>1. Opret projektet</summary>
 
-1. Åben Godot og vælg `:heavy_plus_sign: New`. 
+1. Åben Godot og vælg `+ New`. 
 2. I `Project Name` skriver du `Arkanoid`.
 3. Klik på `Browse` og vælg en mappe, hvor du vil gemme alle de spil vi skal lave og klik så `Select Current Folder`.
 4. Klik på `Create Folder` og klik så på `Create & Edit`.
