@@ -157,3 +157,121 @@ Vi vil gerne genstarte spillet, når bolden ryger ud af bunden af skærmen.
 5. Start spillet igen. Nu skulle du gerne se at spillet genstarter, når bolden ryger ud af bunden af skærmen.
 
 </details>
+
+<details>
+    <summary>9. Få spilleren til at bevæge sig</summary>
+
+Vi flytter spilleren frem og tilbage ved at bruge piletasterne.
+
+1. Vælg `Player`-scenen og klik på øverste objekt i venstre side, som hedder `Player`. Det skal gerne ligne dette billede:
+![img.png](files/player-selected.png)
+2. Klik på `Attach script`-knappen i venstre side af skærmen (den med det grønne kryds).
+> :grey_exclamation: Kald scriptet `Player.cs` med stort P.
+3. Gå til `Project -> Project Settings` i toppen af skærmen og vælg `Input Map`.
+4. Tilføj to nye actions, en kaldet `MoveLeft` og en kaldet `MoveRight`. Se om du selv kan finde ud af hvordan. Når du har gjort det, skal det gerne se sådan her ud:
+![img.png](files/input-actions.png)
+5. Nu skal du få `MoveLeft` til at lytte på venstre piletast og `MoveRight` til at lytte på højre piletast. Klik på `MoveLeft` og klik på `+ Add Event`. Vælg `Key` og tryk på venstre piletast. Gør det samme for `MoveRight` og højre piletast. Du skal bruge `+`-knappen ud for hver funktion.
+![img.png](files/input-actions-set.png)
+6. Udskift indholdet i `Player.cs` med følgende:
+
+```csharp
+using Godot;
+using System;
+
+public partial class Player : CharacterBody2D
+{
+	// Acceleration betyder hvor hurtigt spilleren bevaeger sig
+	public float Acceleration = 100;
+	// Friction betyder hvor hurtigt spilleren stopper, naar man slipper tasten
+	public float Friction = 100;
+
+	public override void _PhysicsProcess(double delta)
+	{
+		if (Input.IsActionPressed("MoveLeft"))
+		{
+			Velocity = new Vector2(Velocity.X - Acceleration, Velocity.Y);
+		}
+		if (Input.IsActionPressed("MoveRight"))
+		{
+			Velocity = new Vector2(Velocity.X + Acceleration, Velocity.Y);
+		}
+
+		MoveAndSlide();
+		Velocity = Velocity.MoveToward(Vector2.Zero, Friction);
+	}
+}
+```
+7. Start spillet og se at spilleren bevæger sig, når du trykker på piletasterne. Den bevæger sig bare ikke særlig optimalt.
+
+</details>
+
+<details>
+    <summary>10. Få spilleren til at bevæge sig ordentligt</summary>
+
+Spilleren kan bevæge sig nu, men det fungerer ikke særlig godt.
+
+> **Opgave**: Åben `Player.cs` og se øverst i filen, hvor der er to variabler, som hedder `Acceleration` og `Friction`. Prøv at ændre på dem og start spillet igen. Hvad sker der? Find frem til to værdier, som du synes fungerer godt.
+
+</details>
+
+<details>
+    <summary>11. Tilføj bricks</summary>
+
+Bricks er de ting, som bolden skal ramme. Vi skal bruge en ny scene til dem.
+
+1. Tilføj en ny scene. Den skal være af typen `StaticBody2D`. Giv den navnet `Brick`.
+2. Tilføj en `Sprite2D` og en `CollisionShape2D` til din `Brick`.
+3. For din `Sprite2D` finder du `Texture` og trækker `brick.png` ind.
+4. For din `CollisionShape2D` finder du `Shape` og vælger `RectangleShape2D`. Sørg for at den passer med din `Sprite2D`.
+5. Gå tilbage til din `main`-scene og tilføj en `Brick`-scene. Placer den et sted på skærmen og giv den en passende størrelse.
+6. Start spillet og prøv at bolden rammer din brick.
+
+</details>
+
+<details>
+    <summary>12. Få bolden til at ødelægge bricks</summary>
+
+Bricks skal forsvinde når bolden rammer dem.
+
+1. Gå tilbage til din `Ball`-scene og klik på `Attach script`-knappen i venstre side a skærmen (den har et grønt kryds).
+2. Sæt `Language` til `C#` og `Path` til `res://Ball.cs` (:grey_exclamation: sørg for at det er med stort B).
+
+Der skal kodes to ting for at få bolden til at ødelægge bricks:
+
+1. Først skal vi lave en metode i vores `Brick.cs` script, som kan få den til at forsvinde fra skærmen.
+2. Derefter skal vi kalde den metode fra vores `Ball.cs` script, når bolden rammer en brick.
+
+Vi starter med at lave metoden i `Brick.cs`. Kopier følgende ind i `Brick.cs`:
+
+```csharp
+public void Hit() 
+{
+    QueueFree();
+}
+```
+
+`QueueFree()` er en indbygget Godot-metode, som sørger for at fjerne objektet fra skærmen.
+
+Vi har nu en metode kaldet `Hit()` som vi kan kalde fra vores `Ball.cs` script. Vi skal bare finde ud af hvornår bolden har ramt en brick.
+
+Skift over til `Ball.cs` og find linjen, hvor der står `Velocity = Velocity.Bounce(collision.GetNormal());` 
+
+Efter den linje skal du tilføje følgende:
+
+```csharp
+if (collision.GetCollider() is Brick brick)
+{
+    // her har du en variabel der hedder brick. Proev om du kan bruge den til at faa vores brick til at forsvinde
+}
+```
+
+Nu skal du finde ud af hvordan du retter den kode til, så en brick forsvinder, når bolden rammer den.
+
+</details>
+
+<details>
+    <summary>13. Tilføj flere bricks</summary>
+
+Tilføj en masse bricks til din `main`-scene og start spillet. Se om du kan rydde skærmen for bricks.
+
+</details>

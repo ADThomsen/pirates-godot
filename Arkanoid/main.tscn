@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://c8hmjm2fgk0it"]
+[gd_scene load_steps=5 format=3 uid="uid://c8hmjm2fgk0it"]
 
 [ext_resource type="PackedScene" uid="uid://bsb6ws4xhsy13" path="res://wall.tscn" id="1_1nqwu"]
 [ext_resource type="PackedScene" uid="uid://cqj5ewugug2ji" path="res://ball.tscn" id="2_w2tls"]
 [ext_resource type="PackedScene" uid="uid://bdvldtrss0jyu" path="res://player.tscn" id="3_shyl3"]
+[ext_resource type="PackedScene" uid="uid://c3wh50asfe0ep" path="res://brick.tscn" id="4_02qv6"]
 
 [node name="Main" type="Node"]
 
@@ -26,3 +27,7 @@ scale = Vector2(1.5, 1.5)
 [node name="Player" parent="." instance=ExtResource("3_shyl3")]
 position = Vector2(949, 979)
 scale = Vector2(3, 1)
+
+[node name="Brick" parent="." instance=ExtResource("4_02qv6")]
+position = Vector2(1568, 548)
+scale = Vector2(4.56, 2.68)
