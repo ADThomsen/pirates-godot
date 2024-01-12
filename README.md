@@ -164,14 +164,20 @@ Vi vil gerne genstarte spillet, når bolden ryger ud af bunden af skærmen.
 Vi flytter spilleren frem og tilbage ved at bruge piletasterne.
 
 1. Vælg `Player`-scenen og klik på øverste objekt i venstre side, som hedder `Player`. Det skal gerne ligne dette billede:
+
 ![img.png](files/player-selected.png)
+
 2. Klik på `Attach script`-knappen i venstre side af skærmen (den med det grønne kryds).
 > :grey_exclamation: Kald scriptet `Player.cs` med stort P.
 3. Gå til `Project -> Project Settings` i toppen af skærmen og vælg `Input Map`.
 4. Tilføj to nye actions, en kaldet `MoveLeft` og en kaldet `MoveRight`. Se om du selv kan finde ud af hvordan. Når du har gjort det, skal det gerne se sådan her ud:
+
 ![img.png](files/input-actions.png)
+
 5. Nu skal du få `MoveLeft` til at lytte på venstre piletast og `MoveRight` til at lytte på højre piletast. Klik på `MoveLeft` og klik på `+ Add Event`. Vælg `Key` og tryk på venstre piletast. Gør det samme for `MoveRight` og højre piletast. Du skal bruge `+`-knappen ud for hver funktion.
+
 ![img.png](files/input-actions-set.png)
+
 6. Udskift indholdet i `Player.cs` med følgende:
 
 ```csharp
