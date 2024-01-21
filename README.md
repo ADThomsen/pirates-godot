@@ -13,6 +13,8 @@ Vi koder spil med Godot game engine.
 
 </details>
 
+## Arkanoid
+
 Det første vi skal lave er en simpel udgave af spillet [Arkanoid](https://en.wikipedia.org/wiki/Arkanoid), også kendt som breakout-game.
 
 <details>
@@ -279,5 +281,250 @@ Nu skal du finde ud af hvordan du retter den kode til, så en brick forsvinder, 
     <summary>13. Tilføj flere bricks</summary>
 
 Tilføj en masse bricks til din `main`-scene og start spillet. Se om du kan rydde skærmen for bricks.
+
+</details>
+
+## Asteroids
+
+Nu skal vi lave en klon af det gamle spil [Asteroids](https://en.wikipedia.org/wiki/Asteroids_(video_game)).
+
+<details>
+    <summary>1. Opret projektet</summary>
+
+1. Åben Godot og vælg `+ New`.
+2. I `Project Name` skriver du `Asteroids`.
+3. Klik på `Browse` og vælg den samme mappe som du valgte til Arkanoid og klik så `Select Current Folder`.
+4. Klik på `Create Folder` og klik så på `Create & Edit`.
+
+</details>
+
+<details>
+    <summary>2. Klargør projektet</summary>
+
+1. Opret mapper. Nederst til venstre i Godot laver du denne struktur under `res://`:
+```
+res://
+  - assets
+    - sprites
+    - audio
+    - font
+  - scenes
+  - scripts
+```
+2. Download `*.png`-filer fra [sprites](Asteroids/assets/sprites) og `*.wav`-filer fra [audio](Asteroids/assets/audio) og læg dem i de rigtige mapper.
+
+</details>
+
+<details>
+    <summary>3. Tilføj en main scene</summary>
+
+1. Tilføj en ny scene. Den skal være af typen `Node`. Giv den navnet `Main`.
+2. Tryk `Ctrl` + `S` eller `Command` + `S` for at gemme din scene. Sørg for at gemme den i `scenes`-mappen og kald den `main.tscn`.
+3. Gå til `Project -> Project Settings` i toppen af skærmen og vælg `Environment` og sæt `Default Clear Color` til helt sort.
+4. Start spillet og se hvor meget det fylder på din skærm. Gå til `Project -> Project Settings` igen og vælg `Window`. Prøv om du kan finde en `Viewport Width` og `Viewport Height` der passer godt til din skærm.
+
+</details>
+
+<details>
+    <summary>4. Tilføj en spiller</summary>
+
+Spilleren er vores rumskib, som vi kan styre rundt på skærmen. Vi har allerede lavet en spiller før, så prøv om du selv kan finde ud af at lave den. Åben `spoilers` hvis du skal have hjælp.
+
+Lidt hjælp:
+
+- `Player` skal være af typen `CharacterBody2D`.
+- Husk at tilføje en `Sprite2D` og en `CollisionShape2D`.
+- Husk at gemme din scene i `scenes`-mappen og kalde den `player.tscn`.
+- Tilføj en `Player`-scene til din `Main`-scene og se om du kan finde ud af at ændre størrelsen så den passer til din skærm.
+
+<details>
+    <summary>spoilers</summary>
+
+1. Tilføj en ny scene. Den skal være af typen `CharacterBody2D`. Giv den navnet `Player`.
+2. Tilføj en `Sprite2D` og en `CollisionShape2D` til din `Player`.
+3. For din `Sprite2D` finder du `Texture` og trækker `player.png` ind.
+4. For din `CollisionShape2D` finder du `Shape` og vælger `CircleShape2D`.
+5. Nu tilpasser du størrelsen af din `CollisionShape2D` til at passe med din `Sprite2D`.
+6. Gå tilbage til din `main`-scene og tilføj en `Player`-scene. Placer den cirka i midten af skærmen.
+7. Start spillet og se hvordan størrelsen på din spiller passer til skærmen.
+8. Vælg igen din `Player`-scene og sørg for at vælge `Player`-objektet i venstre side af skærmen.
+9. Vælg nu `Transform` i højre side af skærmen og sæt `Scale` til fx `0.5` i både `X` og `Y`.
+10. Start spillet igen og se om din spiller nu passer bedre til skærmen.
+11. Gentag trin 8-10 indtil du synes din spiller passer godt til skærmen.
+
+</details>
+
+</details>
+
+<details>
+    <summary>5. Input map</summary>
+
+Næste trin er at mappe vores input. Det betyder at vi skal fortælle Godot, hvilke taster vi vil bruge til at styre vores spiller.
+
+Hvis du kan huske det fra Arkanoid, så skal vi bruge `Project -> Project Settings` og vælge `Input Map` (øverst). Vi skal bruge følgende actions:
+
+- `TurnLeft` --> `left arrow` eller `a`
+- `TurnRight` --> `right arrow` eller `d`
+- `Forward` --> `up arrow` eller `w`
+- `Fire` --> `space`
+
+<details>
+    <summary>spoilers</summary>
+
+1. Gå til `Project -> Project Settings` og vælg `Input Map` (øverst).
+2. Tilføj en ny action ved at skrive `TurnLeft` i `Add New Action`-feltet og klikke på `Add`.
+3. Klik på `+` ved siden af `TurnLeft`, tryk på venstre piletast og klik på `OK`.
+4. Klik igen på `+` ved siden af `TurnLeft`, tryk på `a` og klik på `OK`.
+5. Gentag trin 2-4 for `TurnRight`, `Forward` og `Fire`.
+
+</details>
+
+</details>
+
+<details>
+    <summary>6. Få spilleren til at bevæge sig</summary>
+
+1. Vælg `Player`-scenen og klik på `Player`-objektet i venstre side af skærmen.
+2. Klik på `Attach script`-knappen i venstre side a skærmen (den har et grønt kryds).
+3. Sæt `Language` til `C#` og `Path` til `res://scripts/Player.cs` (:grey_exclamation: sørg for at det er med stort P).
+4. Udskift indholdet i `Player.cs` med følgende:
+
+```csharp
+using Godot;
+using System;
+
+public partial class Player : CharacterBody2D
+{
+	[Export]
+	public float MaxSpeed = 50.0f;
+	
+	[Export]
+	public float Acceleration = 200.0f;
+
+	[Export]
+	public float RotationSpeed = 150.0f;
+
+	public override void _PhysicsProcess(double delta)
+	{
+		int direction = Input.IsActionPressed("Forward") ? -1 : 0;
+		Vector2 inputVector = new Vector2(0, direction);
+
+		Velocity += inputVector.Rotated(Rotation) * Acceleration;
+		Velocity = Velocity.LimitLength(MaxSpeed);
+
+		if (direction == 0)
+		{
+			Velocity = Velocity.MoveToward(Vector2.Zero, 3);
+		}
+
+		if (Input.IsActionPressed("TurnLeft"))
+		{
+			Rotate(-(RotationSpeed * (float)delta));
+		}
+		if (Input.IsActionPressed("TurnRight"))
+		{
+			Rotate(RotationSpeed * (float)delta);
+		}
+
+		MoveAndSlide();
+	}
+}
+
+```
+
+5. Start spillet og se, at du kan styre din spiller rundt på skærmen. Den bevæger sig ikke særlig flot.
+6. Juster værdierne `MaxSpeed`, `Acceleration` og `RotationSpeed` indtil du synes din spiller bevæger sig godt.
+
+</details>
+
+<details>
+    <summary>7. Sørg for at spilleren bliver på skærmen</summary>
+
+Hvis spilleren flyver ud af skærmen, skal den komme ind fra den anden side.
+
+Prøv om du selv kan løse denne opgave. Her er lidt hjælp:
+
+- Husk at vi har et koordinatsystem for spillet. Øverst til venstre er `0,0`.
+- Der er en standard-metode vi kan bruge som hedder `GetViewportRect()`. Brug den sådan her: `Vector2 screenSize = GetViewportRect().Size;`.
+- `screenSize` har en `X` og en `Y` værdi. `X` er bredden af skærmen og `Y` er højden af skærmen.
+- Vi har også en standard-property, som hedder `GlobalPosition`. Den fortæller os hvor vores spiller er på skærmen. Den har også en `X` og en `Y` værdi.
+- Vi kan fx ændre spillerens position ved at skrive `GlobalPosition = new Vector2(100, 100);`.
+
+<details>
+    <summary>Spoiler 1</summary>
+
+Sæt koden her ind i din `Player.cs` fil. Koden skal være lige inden `MoveAndSlide()`. Se om du selv kan gøre den færdig.
+
+```csharp
+Vector2 screenSize = GetViewportRect().Size;
+if (GlobalPosition.Y < 0)
+{
+}
+if (GlobalPosition.Y > screenSize.Y)
+{
+}
+if (GlobalPosition.X < 0)
+{
+}
+if (GlobalPosition.X > screenSize.X)
+{
+}
+```
+
+</details>
+
+<details>
+    <summary>Spoiler 2</summary>
+
+Sæt koden her ind i din `Player.cs` fil. Koden skal være lige inden `MoveAndSlide()`. Se om du selv kan gøre den færdig.
+
+```csharp
+Vector2 screenSize = GetViewportRect().Size;
+if (GlobalPosition.Y < 0)
+{
+    GlobalPosition = new Vector2();
+}
+if (GlobalPosition.Y > screenSize.Y)
+{
+    GlobalPosition = new Vector2();
+}
+if (GlobalPosition.X < 0)
+{
+    GlobalPosition = new Vector2();
+}
+if (GlobalPosition.X > screenSize.X)
+{
+    GlobalPosition = new Vector2();
+}
+```
+
+</details>
+
+<details>
+    <summary>Spoiler 3</summary>
+
+Koden som sørger for at spilleren kommer ind fra den anden side af skærmen ser sådan ud. Koden skal være lige inden `MoveAndSlide()`.
+
+```csharp
+Vector2 screenSize = GetViewportRect().Size;
+if (GlobalPosition.Y < 0)
+{
+    GlobalPosition = new Vector2(GlobalPosition.X, screenSize.Y);
+}
+if (GlobalPosition.Y > screenSize.Y)
+{
+    GlobalPosition = new Vector2(GlobalPosition.X, 0);
+}
+if (GlobalPosition.X < 0)
+{
+    GlobalPosition = new Vector2(screenSize.X, GlobalPosition.Y);
+}
+if (GlobalPosition.X > screenSize.X)
+{
+    GlobalPosition = new Vector2(0, GlobalPosition.Y);
+}
+```
+
+</details>
 
 </details>
