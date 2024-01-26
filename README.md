@@ -311,7 +311,7 @@ res://
   - scenes
   - scripts
 ```
-2. Download `*.png`-filer fra [sprites](Asteroids/assets/sprites) og `*.wav`-filer fra [audio](Asteroids/assets/audio) og læg dem i de rigtige mapper.
+2. Download `*.png`-filer fra [sprites](Asteriods/assets/sprites) og `*.wav`-filer fra [audio](Asteriods/assets/audio) og læg dem i de rigtige mapper.
 
 </details>
 
@@ -538,7 +538,9 @@ Næste step er at få vores rumskib til at skyde med laser. Vi starter med at ti
 2. Tilføj en `CollisionShape2D` og en `Sprite2D` til din `Laser`.
 3. For din `Sprite2D` finder du `Texture` og trækker `laserBlue01.png` ind fra din `sprites` mappe.
 4. Nu skal du placere din laser i toppen af din scene. Det vil sige at bunden af din sprite skal røre ved midten af din skærm. Det skal se sådan her ud:
+
 ![laser-position.png](files/laser-position.png)
+
 5. For din `CollisionShape2D` finder du `Shape` og vælger `CapsuleShape2D`. Sørg for at den passer med din `Sprite2D`.
 6. Tilføj et script til din `Laser` og kald det `Laser.cs`. Sæt `Language` til `C#` og `Path` til `res://scripts/Laser.cs` (:grey_exclamation: sørg for at det er med stort L).
 7. Udskift indholdet i `Laser.cs` med følgende:
