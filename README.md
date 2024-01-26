@@ -528,3 +528,51 @@ if (GlobalPosition.X > screenSize.X)
 </details>
 
 </details>
+
+<details>
+    <summary>8. Tilføj laser</summary>
+
+Næste step er at få vores rumskib til at skyde med laser. Vi starter med at tilføje laseren og få den til at bevæge sig.
+
+1. Tilføj en ny scene. Den skal være af typen `Area2D`. Giv den navnet `Laser`.
+2. Tilføj en `CollisionShape2D` og en `Sprite2D` til din `Laser`.
+3. For din `Sprite2D` finder du `Texture` og trækker `laserBlue01.png` ind fra din `sprites` mappe.
+4. Nu skal du placere din laser i toppen af din scene. Det vil sige at bunden af din sprite skal røre ved midten af din skærm. Det skal se sådan her ud:
+![laser-position.png](files/laser-position.png)
+5. For din `CollisionShape2D` finder du `Shape` og vælger `CapsuleShape2D`. Sørg for at den passer med din `Sprite2D`.
+6. Tilføj et script til din `Laser` og kald det `Laser.cs`. Sæt `Language` til `C#` og `Path` til `res://scripts/Laser.cs` (:grey_exclamation: sørg for at det er med stort L).
+7. Udskift indholdet i `Laser.cs` med følgende:
+
+```csharp
+using Godot;
+
+public partial class Laser : Area2D
+{
+    public Vector2 Movement = new Vector2(0, -1);
+    public float Speed = 750;
+
+    public override void _PhysicsProcess(double delta)
+    {
+        float x = GlobalPosition.X + Movement.Rotated(Rotation).X * Speed * (float)delta;
+        float y = GlobalPosition.Y + Movement.Rotated(Rotation).Y * Speed * (float)delta;
+        GlobalPosition = new Vector2(x, y);
+    }
+
+    public void OnScreenExited()
+    {
+        QueueFree();
+    }
+}
+
+```
+
+8. Tilføj en `Laser`-scene til din `Main`-scene. Start spillet og se laseren bevæge sig opad på skærmen. 
+> For at spare på ressourcerne, så skal vi sørge for at laseren forsvinder, når den ryger ud af skærmen.
+9. Tilføj en `VisibleOnScreenNotifier2D` til din `Laser`-scene. Gå til `Node`-tabben i højre side og dobbeltklik på `screen_exited`. Klik på `Pick`-knappen og vælg `OnScreenExited()` og klik `OK`. Klik så på `Connect`.
+
+</details>
+
+<details>
+    <summary>9. Få spilleren til at skyde</summary>
+
+</details>
