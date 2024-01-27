@@ -1,12 +1,12 @@
 [gd_scene load_steps=3 format=3 uid="uid://dwr14xk2alkbw"]
 
+[ext_resource type="Script" path="res://scripts/Main.cs" id="1_fl6hn"]
 [ext_resource type="PackedScene" uid="uid://baw63rjciklie" path="res://scenes/player.tscn" id="1_t8qfm"]
-[ext_resource type="PackedScene" uid="uid://d0mn7epbj3k6t" path="res://scenes/laser.tscn" id="2_4et0k"]
 
 [node name="Main" type="Node"]
+script = ExtResource("1_fl6hn")
 
 [node name="Player" parent="." instance=ExtResource("1_t8qfm")]
 position = Vector2(952, 723)
 
-[node name="Laser" parent="." instance=ExtResource("2_4et0k")]
-position = Vector2(541, 855)
+[node name="Lasers" type="Node" parent="."]

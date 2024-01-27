@@ -577,4 +577,96 @@ public partial class Laser : Area2D
 <details>
     <summary>9. Få spilleren til at skyde</summary>
 
+Nu skal vi have laseren til at komme fra spilleren, når vi trykker på `space`. Det er lidt kompliceret, så sørg for at følge alle trinene så præcist som muligt.
+
+At få spilleren til at affyre laseren, består af tre dele:
+
+- Vi skal lave en munding, på engelsk kaldet en `muzzle`, som er der hvor laseren kommer fra.
+- Vi skal skrive kode til vores `Player` som sørger for at laseren kommer fra mundingen når vi trykker på `space`.
+- Vi skal lave noget kode til vores `Main`-scene, som sørger for at laseren bliver tilføjet til scenen.
+
+#### Munding
+
+1. Gå til din `Player`-scene og tilføj en `Node2D` til din `Player`. Kald den `Muzzle`.
+2. Zoom ind på din `Player` og placer `Muzzle` i toppen af din `Player`. Det skal se sådan her ud (mundningen er det lille røde punkt):
+
+![muzzle-position.png](files/muzzle-position.png)
+
+#### Kode til `Player`
+
+1. Gå til dit `Player`-script og tilføj følgende kode lige ovenover `public override void _PhysicsProcess(double delta)`:
+
+```csharp
+[Export]
+public PackedScene SceneLoader { get; set; }
+
+public Node2D Muzzle = new Node2D();
+
+[Signal]
+public delegate void LaserFiredEventHandler(Laser laser);
+
+public override void _Ready()
+{
+    Muzzle = GetNode<Node2D>("Muzzle");
+}
+
+public override void _Process(double delta)
+{
+    if (Input.IsActionJustPressed("Fire"))
+    {
+        ShootLaser();
+    }
+}
+```
+
+2. Tilføj følgende metode til dit `Player`-script, i bunden, lige ovenover det sidste `}`:
+
+```csharp
+public void ShootLaser()
+{
+    Laser laser = SceneLoader.Instantiate<Laser>();
+    laser.GlobalPosition = Muzzle.GlobalPosition;
+    laser.Rotation = Rotation;
+    EmitSignal(SignalName.LaserFired, laser);
+}
+```
+
+3. Gå tilbage til din `Player`-scene og klik på `Player`-objektet i venstre side af skærmen. I højre side af skærmen i tabben `Inspector` finder du `Laser Scene`. Klik på pilen ud for, klik på `Quick Load` og vælg din `laser.tscn`.
+
+Den vigtigste del af koden er `EmitSignal(SignalName.LaserFired, laser);`. Det er den kode, som sørger for at vi kan tilføje laseren til vores `Main`-scene senere. Signaler er en vigtig del af Godot og er en måde som vi kan sende beskeder mellem scener på.
+
+#### Kode til `Main`
+
+1. Gå til din `Main`-scene og tilføj en `Node` til din `Main`. Kald den `Lasers`. Det er her vi skal tilføje vores lasere. Det hjælper til holde vores scene ren og overskuelig.
+2. Tilføj nu et script til din `Main`-scene og kald det `Main.cs`. Sæt `Language` til `C#` og `Path` til `res://scripts/Main.cs` (:grey_exclamation: sørg for at det er med stort M).
+3. Udskift indholdet i `Main.cs` med følgende:
+
+```csharp
+using Godot;
+
+public partial class Main : Node
+{
+    Node Lasers = new Node();
+    Player Player = new Player();
+    
+    public override void _Ready()
+    {
+        Lasers = GetNode<Node>("Lasers");
+    
+        Player = GetNode<Player>("Player");
+        Player.LaserFired += OnLaserFired;
+    }
+    
+    public void OnLaserFired(Laser laser)
+    {
+        Lasers.AddChild(laser);
+    }
+}
+
+```
+
+4. Start spillet og se om du kan skyde med laseren.
+
+Læg mærke til linjen `Player.LaserFired += OnLaserFired;`. Det er her vi frotæller, at vores `Main`-scene skal lytte på `LaserFired`-signalet fra vores `Player`-scene. Og vi fortæller Godot, at når det signal bliver sendt, så skal den kalde `OnLaserFired`-metoden.
+
 </details>
