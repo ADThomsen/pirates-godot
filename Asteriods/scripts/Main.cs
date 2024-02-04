@@ -13,7 +13,15 @@ public partial class Main : Node
 		Player.LaserFired += OnLaserFired;
 	}
 
-	public void OnLaserFired(Laser laser)
+    public override void _Process(double delta)
+    {
+        if (Input.IsActionJustPressed("Restart"))
+		{
+			GetTree().ReloadCurrentScene();
+		}
+    }
+
+    public void OnLaserFired(Laser laser)
 	{
 		Lasers.AddChild(laser);
 	}

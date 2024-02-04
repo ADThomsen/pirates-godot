@@ -10,7 +10,7 @@ public partial class Player : CharacterBody2D
 	public float Acceleration = 10.0f;
 
 	[Export]
-	public float RotationSpeed = 10.0f;
+	public float RotationSpeed = 6.0f;
 
 	[Export]
 	public PackedScene LaserScene { get; set; }

@@ -670,3 +670,208 @@ public partial class Main : Node
 Læg mærke til linjen `Player.LaserFired += OnLaserFired;`. Det er her vi frotæller, at vores `Main`-scene skal lytte på `LaserFired`-signalet fra vores `Player`-scene. Og vi fortæller Godot, at når det signal bliver sendt, så skal den kalde `OnLaserFired`-metoden.
 
 </details>
+
+<details>
+    <summary>10. Tilføj asteroider</summary>
+
+Næste step er at tilføje asteroider til vores spil, så vores spiller har noget at skyde efter.
+
+1. Tilføj en ny scene. Den skal være af typen `Area2D`. Giv den navnet `Asteroid`.
+2. Tilføj en `CollisionShape2D` og en `Sprite2D` til din `Asteroid`.
+3. I `Sprite2D` skal vi bruge den sprite der hedder `meteorGrey_big4.png`.
+4. For vores `CollisionShape2D` skal vi bruge en `CircleShape2D`. Sørg for at den passer så godt som muligt med din `Sprite2D`.
+5. Tilføj et script til din `Asteroid` og kald det `Asteroid.cs`. Sæt `Language` til `C#` og `Path` til `res://scripts/Asteroid.cs` (:grey_exclamation: sørg for at det er med stort A).
+6. Udskift indholdet i `Asteroid.cs` med følgende:
+
+```csharp
+using Godot;
+
+public partial class Asteroid : Area2D
+{
+    public Vector2 Movement = new Vector2(0, -1);
+    public float Speed = 60;
+
+    public override void _PhysicsProcess(double delta)
+    {
+        float x = GlobalPosition.X + Movement.Rotated(Rotation).X * Speed * (float)delta;
+        float y = GlobalPosition.Y + Movement.Rotated(Rotation).Y * Speed * (float)delta;
+        GlobalPosition = new Vector2(x, y);
+    }
+}
+
+```
+
+7. Tilføj en `Asteroid`-scene til din `Main`-scene. Start spillet og se asteroiden bevæge sig opad på skærmen.
+</details>
+
+<details>
+    <summary>11. Få asteroiden til at bevæge sig i tilfældig retning</summary>
+
+Lige nu kan vores asteroide kun bevæge sig opad, fordi vi sætter retningen ved at skrive `public Vector2 Movement = new Vector2(0, -1);`. Vi vil gerne have at asteroiden bevæger sig i en tilfældig retning.
+
+Det eneste vi skal gøre er at give vores asteroide en tilfældig `RotationDegrees`, når den bliver tilføjet til vores scene, fordi vores kode allerede tager højde for rotation. Prøv at kigge på koden og se om du kan spotte, hvor vi bruger rotationen.
+
+I `Asteroid.cs` skal du tilføje følgende kode:
+
+```csharp
+public override void _Ready()
+{
+    RotationDegrees = (float)GD.RandRange(0d, 360d);
+}
+```
+
+Det skal sættes ind lige over `public override void _PhysicsProcess(double delta)`.
+
+</details>
+
+<details>
+    <summary>12. Game restart</summary>
+
+Inden vi går videre med vores asteroider, vil vi lave en nem måde at genstarte spillet på. Særligt mens vi udvikler, vil det være rart at kunne.
+
+1. Gå til `Project -> Project Settings` og vælg `Input Map`.
+2. Tilføj en ny action "Restart" og sæt den til `r`.
+4. Gå til dit `Main.cs`-script og tilføj følgende kode (det skal stå lige over `public void OnLaserFired(Laser laser)`):
+
+```csharp
+public override void _Process(double delta)
+{
+    if (Input.IsActionJustPressed("Restart"))
+    {
+        GetTree().ReloadCurrentScene();
+    }
+}
+```
+
+5. Start spillet og prøv at trykke på `r`. Spillet skulle gerne genstarte og den asteroide vi tilføjede i sidste step skal skifte retning.
+
+</details>
+
+<details>
+    <summary>13. Gør asteroidens størrelse variabel</summary>
+
+> Dette trin er svært. Sørg for at følge guiden nøje.
+
+Vi vil gerne genbruge vores `Asteroid`-scene, så vi kan lave asteroider i forskellige størrelser. Når vi senere skal til at dele asteroider op i mindre asteroider, så vil det være en fordel kun at have én `Asteroid`-scene.
+
+For at gøre størrelsen variabel skal vi gøre 3 ting:
+
+- Vi skal tilføje en `Size`-indstilling til vores `Asteroid`-scene.
+- Vi skal skifte vores `Sprite2D`-billede, så det passer til størrelsen.
+- Vi skal sørge for at vores `CollisionShape2D` passer til størrelsen.
+
+<details>
+    <summary>1. Tilføj en `Size`-indstilling</summary>
+
+1. Gå til dit `Asteroid`-script og tilføj følgende kode:
+
+```csharp
+public enum AsteroidSize
+{
+    Small,
+    Medium,
+    Large
+}
+```
+
+Det skal stå helt i bunden af filen.
+
+2. Gå til dit `Asteroid`-script og tilføj følgende kode:
+
+```csharp
+[Export]
+public AsteroidSize Size = AsteroidSize.Large;
+```
+
+Se om du selv kan finde ud af hvor det skal stå. For at teste om du har sat koden det rigtige sted, går du tilbage til Godot og klikker på `Build Project` (den lille hammer ved siden af `Play`-knappen). Hvis du har sat koden det rigtige sted, så skulle du gerne kunne se `Size`-indstillingen i `Inspector`-vinduet, når du har valgt din `Asteroid`-scene. Det skal se sådan her ud:
+
+![size-property.png](files/size-property.png)
+
+Prøv dig frem indtil koden står det rigtige sted.
+
+</details>
+
+<details>
+    <summary>2. Skift `Sprite2D`-billede</summary>
+
+Nu skal vi udskiftet vores `Sprite2D`-billede, så det passer til størrelsen.
+
+1. Åben dit `Asteroid.cs`-script og tilføj følgende kode lige under `public float Speed = 60;`:
+
+```csharp
+public Sprite2D Sprite;
+```
+
+Det gør at vi kan ændre vores `Sprite2D`-billede fra vores script.
+
+2. I `Asteroid`-scriptet skal du tilføje følgende kode lige under `RotationDegrees = (float)GD.RandRange(0d, 360d);`:
+
+```csharp
+Sprite = GetNode<Sprite2D>("Sprite2D");
+
+switch (Size)
+{
+    case AsteroidSize.Large:
+        Sprite.Texture = GD.Load<Texture2D>("res://assets/sprites/HVAD_SKAL_DER_MON_STÅ_HER");
+        break;
+    case AsteroidSize.Medium:
+        Sprite.Texture = GD.Load<Texture2D>("res://assets/sprites/HVAD_SKAL_DER_MON_STÅ_HER");
+        break;
+    case AsteroidSize.Small:
+        Sprite.Texture = GD.Load<Texture2D>("res://assets/sprites/HVAD_SKAL_DER_MON_STÅ_HER");
+        break;
+}
+```
+
+Se om du kan finde ud af hvad der skal stå i stedet for `HVAD_SKAL_DER_MON_STÅ_HER`.
+
+3. For at teste om koden virker, går du tilbage til Godot og ændrer `Size`-indstillingen for din `Asteroid`-scene. Når du starter spillet skal du nu kunne se at asteroiden skifter størrelse. Sørg for at teste alle størrelser.
+4. Hvordan er størrelsen på din asteroide i forhold til størrelsen på dit rumskib? Hvis det er for svært at ramme, så prøv at ændre størrelsen på din asteroide ved at finde `Transform`-området i højre side af skærmen og ændre på `Scale`. Prøv dig frem til du finder en god værdi for `Scale`.
+
+</details>
+
+<details>
+    <summary>3. Sørg for at `CollisionShape2D` passer til størrelsen</summary>
+
+Lad os starte med at se hvad problemet er.
+
+1. Gå til Godot og tryk på `Debug` fra menuen i toppen af skærmen. Vælg `Visible Collision Shapes`.
+2. Start spillet og se hvordan `CollisionShape2D`-boksen ikke passer til størrelsen på din asteroide, når du vælger `Medium` og `Small`.
+
+For at løse problemet skal vi have lavet tre forskellige `CollisionShape2D`-bokse, som passer til størrelserne på vores asteroider.
+
+1. Gå til Godot og find `File System`-vinduet i bunden af skærmen til venstre. Højreklik på `Res://` og tilføj en ny mappe. Kald den `resources`.
+2. Gå til din `Asteroid`-scene og find `Shape` under `Inspector`-vinduet. Klik på pilen ved `CircleShape2D` og vælg `Save As`.
+3. I vinduet skal `Path` øverst sættes til `res://resources`. `File` skal sættes til `cshape_asteroid_large.tres`. Klik på `Save`.
+4. Vælg nu `Sprite2D` for din `Asteroid`-scene og træk `meteorGrey_med2.png` ind i `Texture`-feltet.
+5. Vælg nu `CollisionShape2D` for din `Asteroid`-scene og tilpas hitboxen, så den passer til asteroiden.
+6. Klik igen på pilen ved `CircleShape2D` og vælg `Save As`. Kald den `cshape_asteroid_medium.tres`.
+7. Gør nu det samme for `Small`-størrelsen. Kald den `cshape_asteroid_small.tres`.
+
+Nu skal vi have lavet koden, så den bruger de rigtige `CollisionShape2D`-bokse alt efter hvilken sørrelse vores asteroide har.
+
+1. Gå til dit `Asteroid.cs`-script og tilføj følgende kode lige under `public Sprite2D Sprite;`:
+
+```csharp
+public CollisionShape2D Shape;
+```
+
+2. Gå til dit `Asteroid.cs`-script og tilføj følgende kode lige under `Sprite = GetNode<Sprite2D>("Sprite2D");`:
+
+```csharp
+Shape = GetNode<CollisionShape2D>("CollisionShape2D");
+```
+
+3. Stadig i dit `Asteroid.cs`-script, skal du nu bruge følgende kode:
+
+```csharp
+Shape.Shape = GD.Load<Shape2D>("res://resources/cshape_asteroid_large.tres");
+```
+
+> Hint: Koden skal bruges tre forskellige steder og skal ændres lidt hvert sted det skal stå.
+
+4. Start spillet og se om `CollisionShape2D`-boksen passer til størrelsen på din asteroide, når du vælger `Small`, `Medium` og `Large`.
+
+</details>
+
+</details>
