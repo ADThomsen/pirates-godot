@@ -841,7 +841,7 @@ Lad os starte med at se hvad problemet er.
 For at løse problemet skal vi have lavet tre forskellige `CollisionShape2D`-bokse, som passer til størrelserne på vores asteroider.
 
 1. Gå til Godot og find `File System`-vinduet i bunden af skærmen til venstre. Højreklik på `Res://` og tilføj en ny mappe. Kald den `resources`.
-2. Gå til din `Asteroid`-scene og find `Shape` under `Inspector`-vinduet. Klik på pilen ved `CircleShape2D` og vælg `Save As`.
+2. Gå til din `Asteroid`-scene og vælg `CollisionShape2D` i venstre side. Find dernæst `Shape` under `Inspector`-vinduet. Klik på pilen ved `CircleShape2D` og vælg `Save As`.
 3. I vinduet skal `Path` øverst sættes til `res://resources`. `File` skal sættes til `cshape_asteroid_large.tres`. Klik på `Save`.
 4. Vælg nu `Sprite2D` for din `Asteroid`-scene og træk `meteorGrey_med2.png` ind i `Texture`-feltet.
 5. Vælg nu `CollisionShape2D` for din `Asteroid`-scene og tilpas hitboxen, så den passer til asteroiden.
