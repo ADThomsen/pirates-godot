@@ -921,3 +921,72 @@ if (GlobalPosition.X > screenSize.X)
 </details>
 
 </details>
+
+<details>
+    <summary>15. Gør asteroidernes sideskift mere flydende</summary>
+
+Det ser lidt mærkeligt ud, når asteroiderne skifter side. Det er fordi de skifter side med det samme, at midten af asteroiden er ude af skærmen. Vi vil gerne ændre det, så det sker når hele asteroiden er ude af skærmen.
+
+Prøv om du selv kan løse denne opgave. Her er lidt hjælp:
+
+- Koden skal stadig skrives i `Asteroide.cs`-scriptet.
+- Start med koden her og se om du kan gøre den færdig (noget af den kode har du i forvejen, så det skal overskrives):
+
+```csharp
+float diameter = ((CircleShape2D)Shape.Shape).Radius * 2;
+Vector2 screenSize = GetViewportRect().Size;
+if ((GlobalPosition.Y + diameter) < 0)
+{
+    GlobalPosition = new Vector2(GlobalPosition.X, screenSize.Y + diameter);
+}
+```
+
+<details>
+    <summary>Spoiler 1</summary>
+
+Med koden her har vi en mere flydende overgang mellem top og bund. Kan du selv gøre højre og venstre side færdig?
+
+```csharp
+float diameter = ((CircleShape2D)Shape.Shape).Radius * 2;
+Vector2 screenSize = GetViewportRect().Size;
+if ((GlobalPosition.Y + diameter) < 0)
+{
+    GlobalPosition = new Vector2(GlobalPosition.X, screenSize.Y + diameter);
+}
+if ((GlobalPosition.Y - diameter) > screenSize.Y)
+{
+    GlobalPosition = new Vector2(GlobalPosition.X, 0 - diameter);
+}
+```
+
+</details>
+
+<details>
+    <summary>Spoiler 2</summary>
+
+Hele koden skal se sådan her ud:
+
+```csharp
+float diameter = ((CircleShape2D)Shape.Shape).Radius * 2;
+Vector2 screenSize = GetViewportRect().Size;
+if ((GlobalPosition.Y + diameter) < 0)
+{
+    GlobalPosition = new Vector2(GlobalPosition.X, screenSize.Y + diameter);
+}
+if ((GlobalPosition.Y - diameter) > screenSize.Y)
+{
+    GlobalPosition = new Vector2(GlobalPosition.X, 0 - diameter);
+}
+if (GlobalPosition.X + diameter < 0)
+{
+    GlobalPosition = new Vector2(screenSize.X + diameter, GlobalPosition.Y);
+}
+if (GlobalPosition.X - diameter > screenSize.X)
+{
+    GlobalPosition = new Vector2(0 - diameter, GlobalPosition.Y);
+}
+```
+
+</details>
+
+</details>
