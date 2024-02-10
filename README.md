@@ -631,7 +631,7 @@ public void ShootLaser()
 }
 ```
 
-3. Gå tilbage til din `Player`-scene og klik på `Player`-objektet i venstre side af skærmen. I højre side af skærmen i tabben `Inspector` finder du `Laser Scene`. Klik på pilen ud for, klik på `Quick Load` og vælg din `laser.tscn`.
+3. Gå tilbage til din `Player`-scene og klik på `Player`-objektet i venstre side af skærmen. I højre side af skærmen i tabben `Inspector` finder du `Scene Loader`. Klik på pilen ud for, klik på `Quick Load` og vælg din `laser.tscn`.
 
 Den vigtigste del af koden er `EmitSignal(SignalName.LaserFired, laser);`. Det er den kode, som sørger for at vi kan tilføje laseren til vores `Main`-scene senere. Signaler er en vigtig del af Godot og er en måde som vi kan sende beskeder mellem scener på.
 
@@ -871,6 +871,52 @@ Shape.Shape = GD.Load<Shape2D>("res://resources/cshape_asteroid_large.tres");
 > Hint: Koden skal bruges tre forskellige steder og skal ændres lidt hvert sted det skal stå.
 
 4. Start spillet og se om `CollisionShape2D`-boksen passer til størrelsen på din asteroide, når du vælger `Small`, `Medium` og `Large`.
+
+</details>
+
+</details>
+
+<details>
+    <summary>14. Få asteroiderne til at blive på skærmen</summary>
+
+Asteroiderne skal blive på skærmen på samme måde som vores spiller. Det vil sige, at hvis de ryger ud af skærmen, så skal de komme ind fra den anden side.
+
+Prøv om du selv kan løse denne opgave. Her er lidt hjælp:
+
+- Du har noget kode i dit `Player.cs`-script, som sørger for at spilleren bliver på skærmen. Kan du bruge noget af den kode?
+- Koden du skal skrive skal være i dit `Asteroid.cs`-script.
+- Koden skal være i den metode, der hedder `_PhysicsProcess`.
+- For at teste om din løsning virker, kan du sætte nogle flere asteroider ind i din `Main`-scene og starte spillet.
+
+<details>
+    <summary>Spoiler 1</summary>
+
+Du skal bruge præcis den samme kode, som vi brugte til vores spiller.
+
+</details>
+
+<details>
+    <summary>Spoiler 2</summary>
+
+```csharp
+Vector2 screenSize = GetViewportRect().Size;
+if (GlobalPosition.Y < 0)
+{
+    GlobalPosition = new Vector2(GlobalPosition.X, screenSize.Y);
+}
+if (GlobalPosition.Y > screenSize.Y)
+{
+    GlobalPosition = new Vector2(GlobalPosition.X, 0);
+}
+if (GlobalPosition.X < 0)
+{
+    GlobalPosition = new Vector2(screenSize.X, GlobalPosition.Y);
+}
+if (GlobalPosition.X > screenSize.X)
+{
+    GlobalPosition = new Vector2(0, GlobalPosition.Y);
+}
+```
 
 </details>
 

@@ -39,7 +39,30 @@ public partial class Asteroid : Area2D
 		float x = GlobalPosition.X + Movement.Rotated(Rotation).X * Speed * (float)delta;
 		float y = GlobalPosition.Y + Movement.Rotated(Rotation).Y * Speed * (float)delta;
         GlobalPosition = new Vector2(x, y);
+
+		Vector2 screenSize = GetViewportRect().Size;
+		if (GlobalPosition.Y < 0)
+		{
+			GlobalPosition = new Vector2(GlobalPosition.X, screenSize.Y);
+		}
+		if (GlobalPosition.Y > screenSize.Y)
+		{
+			GlobalPosition = new Vector2(GlobalPosition.X, 0);
+		}
+		if (GlobalPosition.X < 0)
+		{
+			GlobalPosition = new Vector2(screenSize.X, GlobalPosition.Y);
+		}
+		if (GlobalPosition.X > screenSize.X)
+		{
+			GlobalPosition = new Vector2(0, GlobalPosition.Y);
+		}
     }
+
+	// public void OnAreaEntered(Area2D area)
+	// {
+	// 	QueueFree();
+	// }
 }
 
 public enum AsteroidSize
