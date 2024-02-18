@@ -6,28 +6,17 @@
 
 [node name="Main" type="Node"]
 script = ExtResource("1_fl6hn")
+AsteroidScene = ExtResource("3_5y1dj")
 
 [node name="Player" parent="." instance=ExtResource("1_t8qfm")]
 position = Vector2(952, 723)
 
 [node name="Lasers" type="Node" parent="."]
 
-[node name="Asteroid" parent="." instance=ExtResource("3_5y1dj")]
-position = Vector2(626, 720)
+[node name="Asteroids" type="Node" parent="."]
 
-[node name="Asteroid2" parent="." instance=ExtResource("3_5y1dj")]
-position = Vector2(1984, 793)
+[node name="AsteroidTimer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
 
-[node name="Asteroid3" parent="." instance=ExtResource("3_5y1dj")]
-position = Vector2(278, 176)
-
-[node name="Asteroid4" parent="." instance=ExtResource("3_5y1dj")]
-position = Vector2(354, 1182)
-
-[node name="Asteroid5" parent="." instance=ExtResource("3_5y1dj")]
-position = Vector2(1894, 1159)
-Size = 1
-
-[node name="Asteroid6" parent="." instance=ExtResource("3_5y1dj")]
-position = Vector2(1882, 144)
-Size = 1
+[connection signal="timeout" from="AsteroidTimer" to="." method="OnAsteroidTimerExpired"]

@@ -990,3 +990,318 @@ if (GlobalPosition.X - diameter > screenSize.X)
 </details>
 
 </details>
+
+<details>
+    <summary>16. Få asteroiderne til at bevæge sig med forskellige hastigheder</summary>
+
+For ikke at gøre spillet for forudsigeligt, vil vi gerne have at asteroiderne bevæger sig med forskellige hastigheder.
+
+De skal bevæge sige med følgende hastigheder:
+
+- `LARGE` --> mellem `50` og `100`
+- `MEDIUM` --> mellem `100` og `150`
+- `SMALL` --> mellem `100` og `200`
+
+Koden til at få `LARGE` til at bevæge sig med en tilfældig hastighed mellem `50` og `100` ser sådan ud:
+
+```csharp
+Speed = GD.RandRange(50, 100);
+```
+
+Kan du selv finde ud af hvor det skal sættes ind? Og prøv selv at gøre det færdigt for `MEDIUM` og `SMALL`.
+
+<details>
+    <summary>Spoiler 1</summary>
+
+Koden for `LARGE` sættes ind her:
+
+```csharp
+case AsteroidSize.Large:
+    Speed = GD.RandRange(50, 100);
+    Sprite.Texture = GD.Load<Texture2D>("res://assets/sprites/meteorGrey_big4.png");
+    Shape.Shape = GD.Load<Shape2D>("res://resources/cshape_asteroid_large.tres");
+    break;
+```
+
+</details>
+
+<details>
+    <summary>Spoiler 2</summary>
+
+Hele koden skal se sådan her ud:
+
+```csharp
+switch (Size)
+{
+    case AsteroidSize.Large:
+        Speed = GD.RandRange(50, 100);
+        Sprite.Texture = GD.Load<Texture2D>("res://assets/sprites/meteorGrey_big4.png");
+        Shape.Shape = GD.Load<Shape2D>("res://resources/cshape_asteroid_large.tres");
+        break;
+    case AsteroidSize.Medium:
+        Speed = GD.RandRange(100, 150);
+        Sprite.Texture = GD.Load<Texture2D>("res://assets/sprites/meteorGrey_med2.png");
+        Shape.Shape = GD.Load<Shape2D>("res://resources/cshape_asteroid_medium.tres");
+        break;
+    case AsteroidSize.Small:
+        Speed = GD.RandRange(100, 200);
+        Sprite.Texture = GD.Load<Texture2D>("res://assets/sprites/meteorGrey_tiny1.png");
+        Shape.Shape = GD.Load<Shape2D>("res://resources/cshape_asteroid_small.tres");
+        break;
+}
+```
+
+</details>
+
+</details>
+
+<details>
+    <summary>17. Få asteroiderne til at eksplodere</summary>
+
+Når vi rammer en asteroide med vores laser, så skal den eksplodere.
+
+Start med at tilføje koden her. Det skal stå efter `_PhysicsProcess`-_metoden_:
+
+```csharp
+public void OnAreaEntered(Area2D area)
+{
+    
+}
+```
+
+Tilbage i Godot, skal du finde din `Asteroid`-scene og 
+
+1. Vælg `Asteroid`-objektet i
+2. Klik på `Node`-tabben i højre side
+3. Dobbeltklik på `area_entered`
+4. Klik på `Pick`. Vælg `OnAreaEntered` og klik `OK` og så `Connect`
+
+> Hvis du ikke kan finde `OnAreaEntered`, så prøv at klikke på `Build Project`-knappen, som er ikonet formet som en hammer ved siden af `Play`-knappen.
+
+For at få asteroiden til at eksplodere, skal vi skrive noget kode i vores `Asteroid.cs`-script. Prøv om du selv kan løse denne opgave. Her er lidt hjælp:
+
+- Koden skal skrives i `OnAreaEntered`-metoden.
+- Vi har tidligere skrevet noget kode, der fik vores laser til at forsvinde, det kan vi bruge igen. 
+- Vi skal kun fjerne asteroiden, hvis det er en laser, der rammer den.
+
+<details>
+    <summary>Spoiler</summary>
+
+Koden skal se sådan her ud:
+
+```csharp
+public void OnAreaEntered(Area2D area)
+{
+    if (area is Laser laser)
+    {
+        QueueFree();
+    }
+}
+```
+
+</details>
+
+</details>
+
+<details>
+    <summary>18. Spawn asteroider fra vores Main-scene</summary>
+
+> Dette step er lidt kompliceret, fordi der er mange trin. Sørg for at følge guiden nøje.
+
+For at kunne kontrollere vores asteroider, vil vi spawne dem fra vores `Main`-scene.
+
+1. Gå til din `Main`-scene og tilføj en `Node`, kald den `Asteroids`.
+2. Tilføj et nyt objekt under din `Main`-scene af typen `Timer`. Kald den `AsteroidTimer`.
+3. Sæt `Wait Time` til `3` og `Autostart` til `On`.
+4. Åben dit `Main.cs`-script og tilføj følgende kode:
+
+```csharp
+public void OnAsteroidTimerExpired()
+{
+    GD.Print("Spawn asteroid");
+}
+```
+
+5. Gå tilbage til din `Main`-scene og klik på `AsteroidTimer`-objektet i venstre side.
+6. Klik på `Node`-tabben i højre side og dobbeltklik på `timeout`.
+7. Klik på `Pick` og vælg `OnAsteroidTimerExpired` og klik `OK` og så `Connect`.
+8. Start spillet og se om der bliver printet `Spawn asteroid` i `Output` hvert 3. sekund.
+
+Som det er nu, vil den første asteroide spawne efter 3 sekunder. For at vi har en asteroide ved spillets start, vil vi kalde vores `OnAsteroidTimerExpired`-metode med det samme. Koden vi skal bruge ser sådan ud:
+
+```csharp
+OnAsteroidTimerExpired();
+```
+
+Prøv om du selv kan finde ud af hvor koden skal sættes ind.
+
+<details>
+    <summary>Spoiler</summary>
+
+Koden skal sættes ind i `_Ready`-metoden lige efter `Player.LaserFired += OnLaserFired;`
+
+</details>
+
+Det næste vi skal gøre er at tilføje asteroider til vores `Asteroids`-node, når vores `AsteroidTimer`-timer udløber.
+
+1. Gå til dit `Main.cs`-script og tilføj følgende kode til `OnAsteroidTimerExpired`-metoden:
+
+```csharp
+Vector2 screenSize = GetTree().Root.Size;
+float x = (float)GD.RandRange(0, screenSize.X);
+float y = (float)GD.RandRange(0, screenSize.Y);
+SpawnAsteroid(new Vector2(x, y), AsteroidSize.Large);
+```
+
+2. Koden ovenfor virker ikke endnu, fordi vi mangler en metode, der hedder `SpawnAsteroid`. Koden til den er nedenfor, indsæt den efter `OnAsteroidTimerExpired`-metoden:
+
+```csharp
+public void SpawnAsteroid(Vector2 position, AsteroidSize size)
+{
+    
+}
+```
+
+3. Indsæt følgende kode i `Main.cs`-scriptet, det skal stå lige efter `Player Player = new Player();`
+
+```csharp
+Node Asteroids = new Node();
+
+[Export]
+PackedScene AsteroidScene { get; set; }
+```
+
+4. Gå tilbage til din `Main`-scene i Godot og klik på `Main`-objektet i venstre side. I højre side af skærmen i tabben `Inspector` finder du `Asteroid Scene`. Klik på pilen ud for, klik på `Quick Load` og vælg `asteroid.tscn`.
+5. I `_Ready()`-metoden i dit `Main.cs`-script, skal du tilføje følgende kode lige efter `Lasers = GetNode<Node>("Lasers");`:
+
+```csharp
+Asteroids = GetNode<Node>("Asteroids");
+```
+
+6. Nu mangler vi bare at skrive koden, som står for at spawne vores asteroider. Koden skal skrives i `SpawnAsteroid`-metoden i `Main.cs`-scriptet. Prøv om du selv kan finde ud af det. Her er et par hints:
+
+- Tag et kig i `Player.cs`-scriptet. Der er noget kode, der viser hvordan man `instantierer` en ny scene.
+- Kig i `Main.cs`-scriptet i metoden `OnLaserFired`, hvor vi tilføjer en laser til vores `Lasers`-node.
+
+<details>
+    <summary>Spoiler</summary>
+
+Koden ser sådan her ud:
+
+```csharp
+public void SpawnAsteroid(Vector2 position, AsteroidSize size)
+{
+    Asteroid asteroid = AsteroidScene.Instantiate<Asteroid>();
+    asteroid.GlobalPosition = position;
+    asteroid.Size = size;
+    Asteroids.AddChild(asteroid);
+}
+```
+
+</details>
+
+</details>
+
+<details>
+    <summary>19. Få asteroiderne til at dele sig op</summary>
+
+For at få vores asteroide til at dele sig i to mindre stykker, når den bliver ramt, skal vi fra vores `Main.cs`-script lytte efter noget vi kalder et `Signal` fra vores `Asteroid`-script. Signaler er en standard-ting i Godot, som gør at scener kan kommunikere med hinanden.
+
+1. Gå til dit `Asteroid.cs`-script og tilføj følgende kode lige under `public AsteroidSize Size = AsteroidSize.Large;`:
+
+```csharp
+[Signal]
+public delegate void AsteroidExplodedEventHandler(Asteroid asteroid);
+```
+
+2. Find metoden `OnAreaEntered` i dit `Asteroid.cs`-script og få den til at se sådan her ud:
+
+```csharp
+public void OnAreaEntered(Area2D area)
+{
+    if (area is Laser laser)
+    {
+        EmitSignal(SignalName.AsteroidExploded, this);
+        QueueFree();
+    }
+}
+```
+
+Nu kan andre scener lytte efter `AsteroidExploded`-signalet fra vores `Asteroid`-scene.
+
+3. Gå til dit `Main.cs`-script og tilføj følgende kode i `SpawnAsteroid`-metoden lige inden `Asteroids.AddChild(asteroid);`:
+
+```csharp
+asteroid.AsteroidExploded += OnAsteroidExploded;
+```
+
+Koden virker ikke endnu, fordi vi mangler en metode, der hedder `OnAsteroidExploded`. Koden til den er nedenfor, indsæt den efter `OnAsteroidTimerExpired`-metoden:
+
+```csharp
+public void OnAsteroidExploded(Asteroid asteroid)
+{
+    switch (asteroid.Size)
+    {
+        case AsteroidSize.Large:
+            // Spawn two medium asteroids
+            break;
+        case AsteroidSize.Medium:
+            // Spawn two small asteroids
+            break;
+    }
+}
+```
+
+4. Prøv om du selv kan finde ud af at skrive koden, der skal stå for at spawne to nye asteroider.
+
+<details>
+    <summary>Spoiler 1</summary>
+
+Koden til at spawne en medium asteroide ser sådan ud:
+
+```csharp
+SpawnAsteroid(asteroid.Position, AsteroidSize.Medium);
+```
+
+</details>
+
+<details>
+    <summary>Spoiler 2</summary>
+
+Hele koden skal se sådan her ud:
+
+```csharp
+public void OnAsteroidExploded(Asteroid asteroid)
+{
+    switch (asteroid.Size)
+    {
+        case AsteroidSize.Large:
+            SpawnAsteroid(asteroid.Position, AsteroidSize.Medium);
+            SpawnAsteroid(asteroid.Position, AsteroidSize.Medium);
+            break;
+        case AsteroidSize.Medium:
+            SpawnAsteroid(asteroid.Position, AsteroidSize.Small);
+            SpawnAsteroid(asteroid.Position, AsteroidSize.Small);
+            break;
+    }
+}
+```
+
+</details>
+
+</details>
+
+<details>
+    <summary>20. Få laseren til at forsvinde</summary>
+
+Vi skal have laseren til at forsvinde, når den rammer en asteroide, så en laserstråle kun kan ramme én asteroide.
+
+</details>
+
+<details>
+    <summary>21. Få asteroiderne til at spawne uden for skærmen</summary>
+
+Vores asteroider spawner lige nu inde på skærmen, hvilket får det til at se lidt mærkeligt ud. Vi vil gerne have at de spawner uden for skærmen, så det ligner at de kommer glidende ind på skærmen fra det ydre rum.
+
+</details>
+

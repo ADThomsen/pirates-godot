@@ -10,6 +10,9 @@ public partial class Asteroid : Area2D
 	[Export]
 	public AsteroidSize Size = AsteroidSize.Large;
 
+	[Signal]
+	public delegate void AsteroidExplodedEventHandler(Asteroid asteroid);
+
     public override void _Ready()
     {
         RotationDegrees = (float)GD.RandRange(0d, 360d);
@@ -20,14 +23,17 @@ public partial class Asteroid : Area2D
 		switch (Size)
 		{
 			case AsteroidSize.Large:
+				Speed = GD.RandRange(50, 100);
 				Sprite.Texture = GD.Load<Texture2D>("res://assets/sprites/meteorGrey_big4.png");
 				Shape.Shape = GD.Load<Shape2D>("res://resources/cshape_asteroid_large.tres");
 				break;
 			case AsteroidSize.Medium:
+				Speed = GD.RandRange(100, 150);
 				Sprite.Texture = GD.Load<Texture2D>("res://assets/sprites/meteorGrey_med2.png");
 				Shape.Shape = GD.Load<Shape2D>("res://resources/cshape_asteroid_medium.tres");
 				break;
 			case AsteroidSize.Small:
+				Speed = GD.RandRange(100, 200);
 				Sprite.Texture = GD.Load<Texture2D>("res://assets/sprites/meteorGrey_tiny1.png");
 				Shape.Shape = GD.Load<Shape2D>("res://resources/cshape_asteroid_small.tres");
 				break;
@@ -60,10 +66,14 @@ public partial class Asteroid : Area2D
 		}
     }
 
-	// public void OnAreaEntered(Area2D area)
-	// {
-	// 	QueueFree();
-	// }
+	public void OnAreaEntered(Area2D area)
+	{
+		if (area is Laser laser)
+		{
+			EmitSignal(SignalName.AsteroidExploded, this);
+			QueueFree();
+		}
+	}
 }
 
 public enum AsteroidSize
