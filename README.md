@@ -1296,6 +1296,47 @@ public void OnAsteroidExploded(Asteroid asteroid)
 
 Vi skal have laseren til at forsvinde, når den rammer en asteroide, så en laserstråle kun kan ramme én asteroide.
 
+Gå først til dit `Laser.cs`-script og tilføj følgende metode. Den skal være inde i din `Laser`-class.
+
+```csharp
+public void Hit()
+{
+    QueueFree();
+}
+```
+
+Gå derefter til dit `Asteroid.cs`-script og find metoden `OnAreaEntered`. Hvordan kan vi bruge `Hit`-metoden fra vores `Laser`-script til at få laseren til at forsvinde?
+
+Lige nu ser koden sådan her ud. Prøv om du selv kan finde ud af at gøre den færdig:
+
+```csharp
+public void OnAreaEntered(Area2D area)
+{
+    if (area is Laser laser)
+    {
+        EmitSignal(SignalName.AsteroidExploded, this);
+        QueueFree();
+    }
+}
+```
+
+<details>
+    <summary>Spoiler</summary>
+
+```csharp
+public void OnAreaEntered(Area2D area)
+{
+    if (area is Laser laser)
+    {
+        EmitSignal(SignalName.AsteroidExploded, this);
+        QueueFree();
+        laser.Hit();
+    }
+}
+```
+
+</details>
+
 </details>
 
 <details>
@@ -1303,5 +1344,135 @@ Vi skal have laseren til at forsvinde, når den rammer en asteroide, så en lase
 
 Vores asteroider spawner lige nu inde på skærmen, hvilket får det til at se lidt mærkeligt ud. Vi vil gerne have at de spawner uden for skærmen, så det ligner at de kommer glidende ind på skærmen fra det ydre rum.
 
+For at gøre det, skal vi sætte enten `x` eller `y` til en værdi, der er uden for skærmen. Kopier koden her ind i bunden af `_Ready`-metoden i dit `Asteroid.cs`-script:
+
+```csharp
+if (Size == AsteroidSize.Large)
+{
+    int entrySide = (int)GD.Randi() % 3;
+    switch (entrySide)
+    {
+        case 0:
+            GlobalPosition = new Vector2(GlobalPosition.X, -10000);
+            break;
+        case 1:
+            GlobalPosition = new Vector2(10000, GlobalPosition.Y);
+            break;
+        case 2:
+            GlobalPosition = new Vector2(GlobalPosition.X, 10000);
+            break;
+        case 3:
+            GlobalPosition = new Vector2(-10000, GlobalPosition.Y);
+            break;
+    }
+}
+```
+
+Prøv at læse koden og se om du kan regne ud hvorfor det virker.
+
 </details>
 
+<details>
+    <summary>22. En lille bug i spillet</summary>
+
+Når du starter spillet nu, vil du måske begynde at se nogle fejl, når vi skal spawne asteroider. Det er fordi Godot nogle gange ikke kan regne ud, hvor en asteroide skal spawnes, fordi den også er i gang med at regne nogle andre ting ud.
+
+Vi kan løse problemet ved at bruge noget, der hedder `CallDeferred`. Det er en måde at sige til Godot, at vi gerne vil have at noget kode skal køres, når den har tid.
+
+I `Main.cs`-scriptet skal du skifte den følgende linje:
+
+```csharp
+Asteroids.AddChild(asteroid);
+```
+
+ud med:
+
+```csharp
+Asteroids.CallDeferred("add_child", asteroid);
+```
+
+</details>
+
+<details>
+    <summary>23. Indfør en score</summary>
+
+Vi skal have en score i vores spil, så vi kan se hvor mange asteroider vi har skudt ned.
+
+> Prøv om du selv kan løse denne opgave. Her er et par hints:
+
+- Koden skal skrives i `Main.cs`-scriptet.
+- Vi skal bruge en property, der holder styr på vores score. Den skal være af typen `int`. (hvis du er i tivlv om hvad en property er, så spørg inden du tjekker spoilers)
+- Hvornår skal vi øge vores score? Kan du finde et sted i koden, hvor det giver mening at tælle den op?
+- For at teste om det virker kan du prøve at printe scoren i `Output`-vinduet med `GD.Print(Score)`
+
+<details>
+    <summary>Spoiler 1</summary>
+
+Øverst i vores `Main.cs`-script skal vi tilføje en property, der holder styr på vores score. Koden ser sådan ud:
+
+```csharp
+int Score = 0;
+```
+
+</details>
+
+<details>
+    <summary>Spoiler 2</summary>
+
+I metoden `OnAsteroidExploded` skal vi tilføje koden, der tæller vores score op. Koden ser sådan ud. Sæt den nederst i metoden:
+
+```csharp
+Score++;
+GD.Print(Score);
+```
+
+Den første linje tæller koden op, den næste skriver scoren ud i `Output`-vinduet.
+
+</details>
+
+</details>
+
+<details>
+    <summary>24. Gør scoren variabel</summary>
+
+Nu får man 1 point hver gang man rammer en asteroide. Vi vil gerne lave det sådan, at man får forskellige point alt efter hvilken størrelse asteroide man har ramt.
+
+Pointene skal være sådan her:
+
+- `LARGE` --> 50
+- `MEDIUM` --> 100
+- `SMALL` --> 150
+
+Kan du selv finde ud af hvordan det skal laves? Prøv dig frem og start spillet for at teste om det virker ved at kigge på `Output`-vinduet.
+
+<details>
+    <summary>Spoiler</summary>
+
+Koden ser sådan ud, sæt den ind i stedet for den `OnAsteroidExploded` du har nu (gør den selv helt færdig):
+
+```csharp
+public void OnAsteroidExploded(Asteroid asteroid)
+{
+    switch (asteroid.Size)
+    {
+        case AsteroidSize.Large:
+            SpawnAsteroid(asteroid.Position, AsteroidSize.Medium);
+            SpawnAsteroid(asteroid.Position, AsteroidSize.Medium);
+            Score += ???;
+            break;
+        case AsteroidSize.Medium:
+            Score += ???;
+            SpawnAsteroid(asteroid.Position, AsteroidSize.Small);
+            SpawnAsteroid(asteroid.Position, AsteroidSize.Small);
+            break;
+        case AsteroidSize.Small:
+            Score += ???;
+            break;
+    }
+    GD.Print(Score);
+}
+```
+
+</details>
+
+</details>

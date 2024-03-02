@@ -5,6 +5,7 @@ public partial class Main : Node
 	Node Lasers = new Node();
 	Node Asteroids = new Node();
 	Player Player = new Player();
+	int Score = 0;
 
 	[Export]
 	PackedScene AsteroidScene { get; set; }
@@ -47,12 +48,18 @@ public partial class Main : Node
 			case AsteroidSize.Large:
 				SpawnAsteroid(asteroid.Position, AsteroidSize.Medium);
 				SpawnAsteroid(asteroid.Position, AsteroidSize.Medium);
+				Score += 50;
 				break;
 			case AsteroidSize.Medium:
+				Score += 100;
 				SpawnAsteroid(asteroid.Position, AsteroidSize.Small);
 				SpawnAsteroid(asteroid.Position, AsteroidSize.Small);
 				break;
+			case AsteroidSize.Small:
+				Score += 150;
+				break;
 		}
+		GD.Print(Score);
 	}
 
 	public void SpawnAsteroid(Vector2 position, AsteroidSize size)
@@ -61,6 +68,6 @@ public partial class Main : Node
 		asteroid.GlobalPosition = position;
 		asteroid.Size = size;
 		asteroid.AsteroidExploded += OnAsteroidExploded;
-		Asteroids.AddChild(asteroid);
+		Asteroids.CallDeferred("add_child", asteroid);
 	}
 }

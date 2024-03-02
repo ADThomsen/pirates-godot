@@ -12,6 +12,11 @@ public partial class Laser : Area2D
         GlobalPosition = new Vector2(x, y);
     }
 
+	public void Hit()
+	{
+		QueueFree();
+	}
+
 	public void OnScreenExited()
 	{
 		QueueFree();
