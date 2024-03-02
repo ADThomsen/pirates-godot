@@ -1476,3 +1476,91 @@ public void OnAsteroidExploded(Asteroid asteroid)
 </details>
 
 </details>
+
+<details>
+    <summary>25. Vis scoren på skærmen</summary>
+
+For at vise scoren på skærmen, laver vi et separat UI-område på skærmen. UI er en forkortelse for User Interface, som betyder "noget brugeren kan se".
+
+1. Gå til din `Main`-scene og tilføj et `CanvasLayer`, kald den `UI`.
+2. Under `UI` skal du tilføje en `Control` og kalde den `HUD`. (HUD står for Head-Up Display)
+3. Højreklik på `HUD` og vælg `Save Branch as Scene`. Kald den `hud.tscn` og gem den i din `scenes`-mappe.
+
+Det skal se sådan her ud:
+
+![main-hud.png](files/main-hud.png)
+
+4. Klik på scene-ikonet ud for `HUD` for at åbne `HUD`-scenen.
+5. Under `HUD` skal du tilføje en `Label` og kalde den `Score`.
+6. Gå til [fonts](Asteriods/assets/fonts) og download filen `Kenney Blocks.ttf`. Gem den i din `assets/font`-mappe
+7. I højre side af skærmen under `Inspector` skal du finde `Text` og skrive `Score: 9999` i feltet.
+8. Ud for `Label Settings` skal du klikke på pilen og vælge `New LabelSettings`
+9. Under `Font` sætter du `Size` til `48`
+10. Fra `File System` nederst til venstre i Godot, trækker du `Kenney Blocks.ttf` ind i `Font`-feltet.
+11. Start spillet og se hvordan det ser ud. Just placeringen af scoren på skærmen og størrelsen på skriften indtil du synes det ser godt ud.
+
+Nu mangler vi kun at skrive den kode, der sørger for at scoren bliver vist på skærmen i stedet for at der står 9999.
+
+12. Lav et script til din `Hud`-scene og kald det `Hud.cs` (MED STORT H).
+13. Udskift koden i `Hud.cs` med følgende kode:
+
+```csharp
+using Godot;
+
+public partial class Hud : Control
+{
+    Label Score = new Label();
+    
+    public override void _Ready()
+    {
+        Score = GetNode<Label>("Score");
+    }
+    
+    public void SetScore(int score)
+    {
+        Score.Text = "SCORE: " + score.ToString();
+    }
+}
+
+```
+
+Læg mærke til at vi har lavet en metode, der hedder `SetScore`, som ændrer teksten på vores `Label` til at vise scoren. Den metode kan vi kalde fra vores `Main`-scene hver gang scoren ændrer sig.
+
+14. Gå til din `Main`-scene og tilføj følgende kode lige over `int Score = 0;`:
+
+```csharp
+Hud Hud = new Hud();    
+```
+
+15. I `_Ready`-metoden i dit `Main.cs`-script, skal du tilføje følgende kode lige efter `Asteroids = GetNode<Node>("Asteroids");`:
+
+```csharp
+Hud = GetNode<Hud>("UI/HUD");
+Hud.SetScore(0);
+```
+
+Start spillet. Nu skulle du gerne se scoren være 0.
+
+Sidste step er at opdatere scoren hver gang vi rammer en asteroide. Prøv om du selv kan finde ud af hvordan.
+
+</details>
+
+<details>
+    <summary>26. Giv spilleren 3 liv</summary>
+
+For at give spilleren 3 liv, vil vi først vise hvor mange liv spilleren har og derefter sørge for at spilleren mister et liv, når han bliver ramt af en asteroide.
+
+#### Vis liv på skærmen
+
+1. Lav en ny scene af typen `TextureRect` og kald den `UILife`.
+2. I sprites-mappen skal du finde `playerLife1_blue.png` og trække det ind i `Texture`-feltet under `Inspector`.
+3. Størrelsen er måske ikke helt optimal. Under `Inspector` finder du `Layout` og derefter `Transform`. Klik på pilen formet som en cirkel ud for `Size`.
+4. Sørg for at gemme din nye scene i `scenes`-mappen og kald den `ui_life.tscn`.
+5. Gå til din `Hud`-scene og tilføj en `HBoxContainer` og kald den `Lives`.
+6. Træk `ui_life.tscn` ind i `Lives`-noden. Gør det tre gange.
+7. Placer `Lives` under scoren, så det ser pænt ud og giv det en passende størrelse.
+8. Hvis grafikken ser mærkelig ud, så gør som du gjorde med `Size` for `UILife`.
+9. Brug `Scale` under `Layout/Transform` for at justere størrelsen på `Lives`.
+10. Start spillet og se om det ser godt ud.
+
+</details>

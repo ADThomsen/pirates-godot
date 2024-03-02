@@ -95,6 +95,14 @@ public partial class Asteroid : Area2D
 			laser.Hit();
 		}
 	}
+
+	public void OnBodyEntered(Node2D body)
+	{
+		if (body is Player player)
+		{
+			player.Die();
+		}
+	}
 }
 
 public enum AsteroidSize

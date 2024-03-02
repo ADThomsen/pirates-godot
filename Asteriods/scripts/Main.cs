@@ -5,7 +5,9 @@ public partial class Main : Node
 	Node Lasers = new Node();
 	Node Asteroids = new Node();
 	Player Player = new Player();
+	Hud Hud = new Hud();
 	int Score = 0;
+	int Lives = 3;
 
 	[Export]
 	PackedScene AsteroidScene { get; set; }
@@ -14,9 +16,12 @@ public partial class Main : Node
 	{
 		Lasers = GetNode<Node>("Lasers");
 		Asteroids = GetNode<Node>("Asteroids");
+		Hud = GetNode<Hud>("UI/HUD");
+		Hud.SetScore(0);
 
 		Player = GetNode<Player>("Player");
 		Player.LaserFired += OnLaserFired;
+		Player.Died += OnPlayerDied;
 		OnAsteroidTimerExpired();
 	}
 
@@ -41,6 +46,12 @@ public partial class Main : Node
 		Lasers.AddChild(laser);
 	}
 
+	public void OnPlayerDied()
+	{
+		Lives--;
+		GD.Print(Lives);
+	}
+
 	public void OnAsteroidExploded(Asteroid asteroid)
 	{
 		switch (asteroid.Size)
@@ -59,7 +70,7 @@ public partial class Main : Node
 				Score += 150;
 				break;
 		}
-		GD.Print(Score);
+		Hud.SetScore(Score);
 	}
 
 	public void SpawnAsteroid(Vector2 position, AsteroidSize size)

@@ -20,6 +20,9 @@ public partial class Player : CharacterBody2D
 	[Signal]
 	public delegate void LaserFiredEventHandler(Laser laser);
 
+	[Signal]
+	public delegate void DiedEventHandler();
+
     public override void _Ready()
     {
         Muzzle = GetNode<Node2D>("Muzzle");
@@ -82,5 +85,10 @@ public partial class Player : CharacterBody2D
 		laser.GlobalPosition = Muzzle.GlobalPosition;
 		laser.Rotation = Rotation;
 		EmitSignal(SignalName.LaserFired, laser);
+	}
+
+	public void Die()
+	{
+		EmitSignal(SignalName.Died);
 	}
 }
