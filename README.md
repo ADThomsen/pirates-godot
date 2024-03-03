@@ -1548,7 +1548,7 @@ Sidste step er at opdatere scoren hver gang vi rammer en asteroide. Prøv om du 
 <details>
     <summary>26. Giv spilleren 3 liv</summary>
 
-For at give spilleren 3 liv, vil vi først vise hvor mange liv spilleren har og derefter sørge for at spilleren mister et liv, når han bliver ramt af en asteroide.
+For at give spilleren 3 liv, vil vi først vise hvor mange liv spilleren har og derefter sørge for at spilleren mister et liv, når den bliver ramt af en asteroide.
 
 #### Vis liv på skærmen
 
@@ -1562,5 +1562,185 @@ For at give spilleren 3 liv, vil vi først vise hvor mange liv spilleren har og 
 8. Hvis grafikken ser mærkelig ud, så gør som du gjorde med `Size` for `UILife`.
 9. Brug `Scale` under `Layout/Transform` for at justere størrelsen på `Lives`.
 10. Start spillet og se om det ser godt ud.
+
+#### Kontroller antal liv fra `Main.cs`
+
+Vi har brug for at kunne kontrollere antallet af liv fra vores `Main.cs`-script, for at kunne fjerne et liv, når spilleren bliver ramt af en asteroide.
+
+1. Gå til dit `Hud.cs`-script og tilføj følgende kode lige under `Label Score = new Label();`:
+
+```csharp
+[Export]
+PackedScene LifeScene { get; set; }
+```
+
+Kan du huske hvad `PackedScene` er og hvad vi bruger den til? Hvis du kan, så gå over i Godot og brug den. Hvis ikke, så følg næste trin.
+
+2. I højre side af skærmen under `Inspector` skal du finde `Life Scene` og trække `ui_life.tscn` ind i den.
+3. Slet nu de tre `UILife`-noder, du har i `Lives`-noden.
+4. Tilbage i dit `Hud.cs`-script, skal du tilføje følgende kode lige under `PackedScene LifeScene { get; set; }`:
+
+```csharp
+HBoxContainer Lives = new HBoxContainer();
+```
+
+5. I `_Ready`-metoden i dit `Hud.cs`-script, skal du tilføje følgende kode lige efter `Score = GetNode<Label>("Score");`:
+
+```csharp
+Lives = GetNode<HBoxContainer>("Lives");
+```
+
+6. Nederst i din `Hud`-class i dit `Hud.cs`-script, skal du tilføje følgende kode:
+
+```csharp
+public void SetLives(int lives)
+{
+    foreach (TextureRect life in Lives.GetChildren())
+    {
+        life.QueueFree();
+    }
+    
+    for (int i = 0; i < lives; i++)
+    {
+        TextureRect life = LifeScene.Instantiate<TextureRect>();
+        Lives.CallDeferred("add_child", life);
+    }
+}
+```
+
+Tag fat i en lærer, når du er nået hertil, så I kan snakke om hvordan koden ovenfor fungerer.
+
+7. Gå til din `Main.cs`-script og tilføj følgende kode lige under `int Score = 0;`:
+
+```csharp
+int Lives = 3;
+```
+
+Nu har vi en property, der holder styr på hvor mange liv spilleren har. Vi har også en metode i vores `Hud.cs`-script, der sørger for at vise hvor mange liv spilleren har. Hvordan kan vi mon binde de to sammen?
+
+<details>
+    <summary>Spoiler</summary>
+
+8. I `_Ready`-metoden i dit `Main.cs`-script, skal du tilføje følgende kode lige efter `Hud.SetScore(0);`:
+
+```csharp
+Hud.SetLives(Lives);
+```
+
+</details>
+
+Start spillet og se om det virker. Prøv at ændre `Lives` til et andet tal og se om det viser det rigtige antal liv på skærmen.
+
+#### Tæl liv ned når spilleren bliver ramt
+
+Der skal ske tre ting, for at vi kan tælle liv ned, når spilleren bliver ramt:
+
+- Vi skal have et `Signal` fra vores `Player.cs`-script, der fortæller når spilleren bliver ramt.
+- Vi skal have en metode i vores `Main.cs`-script, der lytter efter signalet og tæller livet ned.
+- Vi skal have en `OnBodyEntered`-metode i vores `Asteroid.cs`-script, så vi ved hvornår en asteroide rammer spilleren.
+
+Start med at lave signalet. Prøv gerne om du selv kan, inden du følger guiden.
+
+1. Gå til dit `Player.cs`-script og tilføj følgende kode lige under `public delegate void LaserFiredEventHandler(Laser laser);`:
+
+```csharp
+[Signal]
+public delegate void DiedEventHandler();
+```
+
+2. Nederst i din `Player`-class i dit `Player.cs`-script, skal du tilføje følgende kode:
+
+```csharp
+public void Die()
+{
+    EmitSignal(SignalName.Died);
+}
+```
+
+Så har vi styr på signalet. Næste trin er at lave en metode i vores `Main.cs`-script, der lytter efter signalet og tæller livet ned.
+
+3. Gå til dit `Main.cs`-script og tilføj følgende kode lige under `Player.LaserFired += OnLaserFired;`:
+
+```csharp
+Player.Died += OnPlayerDied;
+```
+
+4. Tilføj følgende metode til dit `Main.cs`-script:
+
+```csharp
+public void OnPlayerDied()
+{
+    
+}
+```
+
+Prøv om du selv kan finde ud af hvad for noget kode, der skal stå i `OnPlayerDied`-metoden.
+
+<details>
+    <summary>Spoiler</summary>
+
+Koden ser sådan ud:
+
+```csharp
+public void OnPlayerDied()
+{
+    Lives--;
+    Hud.SetLives(Lives);
+    GD.Print(Lives);
+}
+```
+
+</details>
+
+Start spillet og se om det virker. Livene tæller ikke ned på skærmen endnu (vi mangler sidste trin), men du kan se livene tælle ned i `Output`-vinduet.
+
+Sidste trin er at kode vores asteroide, så den ved hvornår den rammer spilleren. Det gør vi ved at lave en metode, der hedder `OnBodyEntered` og connecte til den fra Godot via `Node`-tabben.
+
+Prøv selv at komme så langt du kan. Husk at teste ofte. Ellers, følg trinene nedenfor.
+
+5. Gå til dit `Asteroid.cs`-script og tilføj følgende metode:
+
+```csharp
+public void OnBodyEntered(Node2D body)
+{
+    if (body is Player player)
+    {
+        
+    }
+}
+```
+
+Der mangler noget kode inde i vores `if`. Hvordan skal det se ud?
+
+<details>
+    <summary>Spoiler</summary>
+
+`player.Die();`
+
+</details>
+
+6. Gå tilbage til Godot og find din `Asteroid`-scene. Vælg `Asteroid`-objektet i venstre side og klik på `Node`-tabben i højre side. Dobbeltklik på `body_entered` og klik på `Pick`. Vælg `OnBodyEntered` og klik `OK` og så `Connect`.
+
+Start spillet og se om det virker. Nu skulle du gerne se livene tælle ned på skærmen, når du bliver ramt af en asteroide.
+
+</details>
+
+<details>
+    <summary>27. Respawn når spilleren bliver ramt</summary>
+
+</details>
+
+<details>
+    <summary>28. Game Over</summary>
+
+</details>
+
+<details>
+    <summary>29. Lyd</summary>
+
+</details>
+
+<details>
+    <summary>30. Publish</summary>
 
 </details>

@@ -18,6 +18,7 @@ public partial class Main : Node
 		Asteroids = GetNode<Node>("Asteroids");
 		Hud = GetNode<Hud>("UI/HUD");
 		Hud.SetScore(0);
+		Hud.SetLives(Lives);
 
 		Player = GetNode<Player>("Player");
 		Player.LaserFired += OnLaserFired;
@@ -49,6 +50,7 @@ public partial class Main : Node
 	public void OnPlayerDied()
 	{
 		Lives--;
+		Hud.SetLives(Lives);
 		GD.Print(Lives);
 	}
 

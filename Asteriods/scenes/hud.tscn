@@ -14,6 +14,7 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_iykad")
+LifeScene = ExtResource("3_ytlx7")
 
 [node name="Score" type="Label" parent="."]
 layout_mode = 0
@@ -31,12 +32,3 @@ offset_top = 94.0
 offset_right = 137.0
 offset_bottom = 120.0
 scale = Vector2(2, 2)
-
-[node name="UILife" parent="Lives" instance=ExtResource("3_ytlx7")]
-layout_mode = 2
-
-[node name="UILife2" parent="Lives" instance=ExtResource("3_ytlx7")]
-layout_mode = 2
-
-[node name="UILife3" parent="Lives" instance=ExtResource("3_ytlx7")]
-layout_mode = 2
