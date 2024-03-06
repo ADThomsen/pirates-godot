@@ -1692,8 +1692,6 @@ public void OnPlayerDied()
 
 </details>
 
-Start spillet og se om det virker. Livene tæller ikke ned på skærmen endnu (vi mangler sidste trin), men du kan se livene tælle ned i `Output`-vinduet.
-
 Sidste trin er at kode vores asteroide, så den ved hvornår den rammer spilleren. Det gør vi ved at lave en metode, der hedder `OnBodyEntered` og connecte til den fra Godot via `Node`-tabben.
 
 Prøv selv at komme så langt du kan. Husk at teste ofte. Ellers, følg trinene nedenfor.
