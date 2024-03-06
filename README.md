@@ -1492,7 +1492,7 @@ Det skal se sådan her ud:
 
 4. Klik på scene-ikonet ud for `HUD` for at åbne `HUD`-scenen.
 5. Under `HUD` skal du tilføje en `Label` og kalde den `Score`.
-6. Gå til [fonts](Asteriods/assets/fonts) og download filen `Kenney Blocks.ttf`. Gem den i din `assets/font`-mappe
+6. Gå til [font](Asteriods/assets/font) og download filen `Kenney Blocks.ttf`. Gem den i din `assets/font`-mappe
 7. I højre side af skærmen under `Inspector` skal du finde `Text` og skrive `Score: 9999` i feltet.
 8. Ud for `Label Settings` skal du klikke på pilen og vælge `New LabelSettings`
 9. Under `Font` sætter du `Size` til `48`
