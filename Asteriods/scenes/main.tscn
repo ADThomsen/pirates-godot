@@ -1,15 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://dwr14xk2alkbw"]
+[gd_scene load_steps=9 format=3 uid="uid://dwr14xk2alkbw"]
 
 [ext_resource type="Script" path="res://scripts/Main.cs" id="1_fl6hn"]
 [ext_resource type="PackedScene" uid="uid://baw63rjciklie" path="res://scenes/player.tscn" id="1_t8qfm"]
 [ext_resource type="PackedScene" uid="uid://hp4kysrwdan4" path="res://scenes/hud.tscn" id="3_1dppl"]
 [ext_resource type="PackedScene" uid="uid://blh0rg63x7ky8" path="res://scenes/asteroid.tscn" id="3_5y1dj"]
+[ext_resource type="PackedScene" uid="uid://bt3wkj6pkb6t5" path="res://scenes/game_over_screen.tscn" id="3_mstur"]
+[ext_resource type="AudioStream" uid="uid://drspj0sdtjaeo" path="res://assets/audio/sfx_laser2.wav" id="6_hyagj"]
+[ext_resource type="AudioStream" uid="uid://cilfn37a4hxx3" path="res://assets/audio/explode.wav" id="7_tjelu"]
+[ext_resource type="AudioStream" uid="uid://cn2hitr72i1x4" path="res://assets/audio/hit.wav" id="8_nmsqe"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_fl6hn")
 AsteroidScene = ExtResource("3_5y1dj")
 
 [node name="UI" type="CanvasLayer" parent="."]
+
+[node name="GameOverScreen" parent="UI" instance=ExtResource("3_mstur")]
+visible = false
 
 [node name="HUD" parent="UI" instance=ExtResource("3_1dppl")]
 
@@ -23,5 +30,18 @@ position = Vector2(952, 723)
 [node name="AsteroidTimer" type="Timer" parent="."]
 wait_time = 3.0
 autostart = true
+
+[node name="SpawnPosition" type="Node2D" parent="."]
+position = Vector2(948, 729)
+
+[node name="LaserSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_hyagj")
+
+[node name="AsteroidHitSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_nmsqe")
+volume_db = 10.0
+
+[node name="PlayerHitSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_tjelu")
 
 [connection signal="timeout" from="AsteroidTimer" to="." method="OnAsteroidTimerExpired"]

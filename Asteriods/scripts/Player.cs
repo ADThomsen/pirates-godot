@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class Player : CharacterBody2D
 {
@@ -90,5 +89,11 @@ public partial class Player : CharacterBody2D
 	public void Die()
 	{
 		EmitSignal(SignalName.Died);
+	}
+
+	public void Respawn(Vector2 position)
+	{
+		GlobalPosition = position;
+		Velocity = Vector2.Zero;
 	}
 }

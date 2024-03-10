@@ -1726,15 +1726,231 @@ Start spillet og se om det virker. Nu skulle du gerne se livene tælle ned på s
 <details>
     <summary>27. Respawn når spilleren bliver ramt</summary>
 
+Vi skal gøre 3 ting for at få spilleren til at respawn'e.
+
+- Vi skal have en metode i vores `Player.cs`-script, der sørger for at spilleren respawn'er.
+- I vores `Main.cs`-script, hvor vi tæller livet ned, skal vi også sørge for at spilleren respawn'er.
+- Vi skal have et sted på skærmen hvor spilleren skal respawn'e.
+
+Vi starter med det sidste - lad os lave et punkt hvor spilleren skal respawn'e.
+
+1. Gå til din `Main`-scene og tilføj en `Node2D` og kald den `SpawnPosition`
+2. Placer `SpawnPosition` cirka midt på skærmen
+3. Gå til dit `Main.cs`-script og tilføj følgende kode lige under `Hud Hud = new Hud();`:
+
+```csharp
+Node2D SpawnPosition = new Node2D();
+```
+
+4. I `_Ready`-metoden i dit `Main.cs`-script, skal du tilføje følgende kode:
+
+```csharp
+SpawnPosition = GetNode<Node2D>("SpawnPosition");
+```
+
+5. I dit `Player.cs`-script, skal du tilføje følgende metode:
+
+```csharp
+public void Respawn(Vector2 position)
+{
+    // set position
+}
+```
+
+Kan du selv finde ud af hvad der skal stå i `Respawn`-metoden? Hvordan sætter vi spillerens position til at være `position`?
+
+<details>
+    <summary>Spoiler</summary>
+
+```csharp
+public void Respawn(Vector2 position)
+{
+    GlobalPosition = position;
+    Velocity = Vector2.Zero;
+}
+```
+
+</details>
+
+6. Gå tilbage til dit `Main.cs`-script og skriv koden, der kalder vores nye `Respawn`-metode. Prøv om du selv kan finde ud af det.
+
+<details>
+    <summary>Spoiler</summary>
+
+Indsæt følgende kode i `OnPlayerDied`-metoden:
+
+```csharp
+Player.Respawn(SpawnPosition.GlobalPosition);s
+```
+
+</details>
+
+Start spillet og se om det virker. Det er en simpel måde at lave respawn på. Hvad sker der fx hvis man respawn'er lige oven på en asteroide?
+
 </details>
 
 <details>
     <summary>28. Game Over</summary>
 
+Når spilleren mister sit sidste liv, skal vi have en Game Over screen.
+
+1. Lav en ny scene af typen `Control`, kald den `GameOverScreen`.
+2. Tilføj noget text, hvor der står `GAME OVER` og en knap, hvor der står `TRY AGAIN`. Prøv om selv kan finde de rigtige child-nodes.
+
+<details>
+    <summary>Spoiler</summary>
+
+- Teksten skal være af typen `Label` - husk hvordan du ændrer font og størrelse. Vi vil bruge den samme font som til vores point.
+- Knappen skal være af typen `Button`.
+
+Når du er færdig skal det se sådan ud:
+
+![game-over-screen.png](files/game-over-screen.png)
+
+</details>
+
+3. Gå til din `Main`-scene og og træk `game_over_screen.tscn` ind under `UI`.
+4. For at skjule `GameOverScreen` når spillet starter, skal du sætte `Visible` til `Off` under `Inspector --> CanvasItem --> Visibility`.
+5. For at kunne arbejde med vores `GameOverScreen` fra vores `Main.cs`-script, skal skrive noget kode, der gør den tilgængelig. Kan du selv skrive det? Det er næsten det samme, som vi lige har gjort med `SpawnPosition` i `Main.cs` (Husk at `GameOverScreen` er af typen `Control`).
+
+<details>
+    <summary>Spoiler</summary>
+
+- Tilføj følgende kode lige under `Node2D SpawnPosition = new Node2D();`:
+
+```csharp
+Control GameOverScreen = new Control();
+```
+
+- Tilføj følgende kode i `_Ready`-metoden:
+
+```csharp
+GameOverScreen = GetNode<Control>("UI/GameOverScreen");
+```
+
+</details>
+
+Nu skal vi vise `GameOverScreen` når spilleren mister sit sidste liv. Hvordan mon vi gør det? Her er et par hints:
+
+- Vi skal skrive noget kode i `Main.cs`-scriptet
+- Det skal ske omkring hvor vi tæller liv ned
+- Hvis vi har 0 liv, så skal vi vise `GameOverScreen`.
+  - Og vi vil også gerne fjerne `Player` fra skærmen.
+- Ellers skal vi kalde `Player.Respawn(SpawnPosition.GlobalPosition)`
+
+Prøv dig frem. Og prøv gerne flere forskellige ting, inden du tjekker spoilers.
+
+<details>
+    <summary>Spoiler 1</summary>
+
+```csharp
+public void OnPlayerDied()
+{
+    Lives--;
+    Hud.SetLives(Lives);
+
+    if (Lives <= 0) 
+    {
+        
+    }
+    else 
+    {
+        
+    }
+}
+```
+
+</details>
+
+<details>
+    <summary>Spoiler 2</summary>
+
+```csharp
+public void OnPlayerDied()
+{
+    Lives--;
+    Hud.SetLives(Lives);
+
+    if (Lives <= 0) 
+    {
+        Player.QueueFree();
+        GameOverScreen.Visible = true;
+    }
+    else 
+    {
+        Player.Respawn(SpawnPosition.GlobalPosition);
+    }
+}
+```
+
+</details>
+
+Som det sidste, skal vi have spillet til at genstarte, når man trykker på `TRY AGAIN`-knappen.
+
+1. Tilføj et script til din `GameOverScreen`-scene og kald det `GameOverScreen.cs`. **Sørg for at stave det præcist sådan**.
+2. Udskift koden i `GameOverScreen.cs` med:
+
+```csharp
+using Godot;
+
+public partial class GameOverScreen : Control
+{
+    public void Restart()
+    {
+        GetTree().ReloadCurrentScene();
+    }
+}
+```
+
+3. Forbind `TRY AGAIN`-knappen til `GameOverScreen`-scenens `Restart`-metode. Prøv at gøre det selv, inden du tjekker spoilers.
+
+<details>
+    <summary>Spoiler</summary>
+
+- I Godot går du til din `GameOverScreen`-scene og klikker på `RestartButton`-objektet i venstre side.
+- I højre side af skærmen klikker du på `Node`-tabben.
+- Dobbeltklik på `pressed` og klik på `Pick`.
+- Vælg `Restart()` og klik `OK` og så `Connect`.
+  - Hvis du ikke kan finde `Restart` i listen, så prøv at bygge koden med Hammer-symbolet ved siden af Play-knappen.
+
+</details>
+
+Nu skulle du gerne kunne starte spillet, miste alle dine liv og trykke på `TRY AGAIN`-knappen for at starte forfra.
+
 </details>
 
 <details>
     <summary>29. Lyd</summary>
+
+For at fuldende vores spil, skal der lyd på. Vi skal bruge 3 lydeffekter:
+
+- En lyd, der spiller når spilleren skyder
+- En lyd, der spiller når spilleren bliver ramt
+- En lyd, der spiller når en asteroide bliver ramt
+
+1. Gå til din `Main`-scene og tilføj en `AudioStreamPlayer` og kald den `LaserSound`.
+2. I højre side af skærmen under `Inspector` skal du finde `Stream` og trække `sfx_laser2.wav` ind i feltet.
+3. Gå til dit `Main.cs`-script og tilføj følgende kode lige under `Control GameOverScreen = new Control();`:
+
+```csharp
+AudioStreamPlayer LaserSound = new AudioStreamPlayer();
+```
+
+4. I `_Ready`-metoden i dit `Main.cs`-script, skal du tilføje følgende kode:
+
+```csharp
+LaserSound = GetNode<AudioStreamPlayer>("LaserSound");
+```
+
+5. I `OnLaserFired`-metoden i dit `Main.cs`-script, skal du tilføje følgende kode lige inden `Lasers.AddChild(laser);`:
+
+```csharp
+LaserSound.Play();
+```
+
+Start spillet og hør din skønne laser-lyd.
+
+6. Gør nu stort set det samme for de to andre lyde. Ingen spoilers denne ganga. Du kan godt :)
 
 </details>
 
