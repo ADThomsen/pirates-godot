@@ -1780,7 +1780,7 @@ public void Respawn(Vector2 position)
 Indsæt følgende kode i `OnPlayerDied`-metoden:
 
 ```csharp
-Player.Respawn(SpawnPosition.GlobalPosition);s
+Player.Respawn(SpawnPosition.GlobalPosition);
 ```
 
 </details>
