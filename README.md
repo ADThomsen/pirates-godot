@@ -1961,4 +1961,39 @@ Start spillet og hør din skønne laser-lyd.
 
 ## Tower Defense
 
-Guide til Path2D: https://www.youtube.com/watch?v=9ZWM1CDNPm8
+<details>
+<summary>Lav en Path</summary>
+
+1. Under `Main`, lav en `Path2D`. Under den laver du en `PathFollow2D`
+2. Brug `PathFollow2D` til at tegne den path dine enemies skal følge
+3. Lav en ny `Enemy`-scene. Den skal være en `CharacterBody2D` og have en `CollishionShape2D` og en `Sprite2D`
+4. Sæt `Enemy`-scenen ind under `PathFollow2D` of flyt rundt på `Progress` og se hvad der sker
+5. Sæt et script på din `Enemy`, kald det `Enemy.cs` og læg det i en mappe der hedder `scripts`
+
+Koden skal se nogenlunde sådan her ud:
+
+```csharp
+using Godot;
+
+public partial class Enemy : CharacterBody2D
+{
+    public float Speed { get; set; } = 1.5f;
+    public int Health { get; set; } = 100;
+
+    PathFollow2D Parent = new PathFollow2D();
+
+    public override void _Ready()
+    {
+        Parent = GetParent<PathFollow2D>();
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        // Find selv ud af det :)
+    }
+}
+
+
+```
+
+</details>
