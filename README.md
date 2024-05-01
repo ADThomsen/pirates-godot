@@ -1997,3 +1997,90 @@ public partial class Enemy : CharacterBody2D
 ```
 
 </details>
+
+<details>
+<summary>Lav en wave</summary>
+
+Vores enemies skal komme i bølger. Vi skal lave en `Wave`-scene, der holder styr på hvilke enemies der skal spawnes og hvornår.
+
+1. Lav en ny scene af typen `Node` og kald den `Wave`
+2. Tilføj en `Timer` og kald den `SpawnTimer`
+3. Tilføj endnu en timer og kald den `DelayTimer`
+3. Lave et script til din `Wave`-scene og kald det `Wave.cs`
+4. Tilføj følgende kode til dit `Wave.cs`-script:
+
+```csharp
+using Godot;
+
+public partial class Wave : Node
+{
+    [Export]
+    public double SpawnInterval { get; set;}
+    
+    [Export]
+    public double WaveCount { get; set;}
+    
+    [Export]
+    public double Delay { get; set; }	
+    
+    [Export]
+    public PackedScene EnemyScene { get; set;}
+    
+    [Export]
+    public Node2D Parent { get; set;}
+    
+    public Timer SpawnTimer = new Timer();
+    public Timer DelayTimer = new Timer();
+    public int SpawnConter = 0;
+
+    public override void _Ready()
+    {
+        SpawnTimer = GetNode<Timer>("SpawnTimer");
+        DelayTimer = GetNode<Timer>("DelayTimer");
+
+        SpawnTimer.WaitTime = SpawnInterval;
+    
+        DelayTimer.WaitTime = Delay;
+        DelayTimer.OneShot = true;
+        DelayTimer.Start();
+    }
+
+    public void OnSpawnTimerExpired()
+    {
+        SpawnConter++;
+        if (SpawnConter >= WaveCount)
+        {
+            SpawnTimer.Stop();
+        }
+    
+        Path2D enemy = EnemyScene.Instantiate<Path2D>();
+        Parent.CallDeferred("add_child", enemy);
+    }
+    
+    public void OnDelayTimerExpired()
+    {
+        SpawnTimer.Start();
+    }
+}
+
+```
+
+**HUSK**
+
+- Bind dine timere op til metoderne i koden
+
+Prøv nu om du kan bruge din `Wave`-scene i din `Main`-scene til at spawne enemies.
+
+</details>
+
+<details>
+<summary>Huskeliste</summary>
+
+Vi skal
+
+- Lave en `Bullet`-scene
+- Få vores tower til at skyde med den
+- Sørge for at vores enemies kan dø
+- Lave vores Wave, så den kan spawne forskellige enemies
+
+</details>
