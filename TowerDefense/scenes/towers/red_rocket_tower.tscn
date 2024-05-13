@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://cqnwscdj8p5lw"]
+
+[ext_resource type="Script" path="res://scripts/Tower.cs" id="1_j4yhu"]
+[ext_resource type="Texture2D" uid="uid://7ngw64i4pylf" path="res://assets/images/towerDefense_tile250.png" id="1_y7otr"]
+[ext_resource type="PackedScene" uid="uid://dr3u4vimkggkl" path="res://scenes/towers/red_rocket.tscn" id="2_jf32y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ooj8i"]
+size = Vector2(47.5, 44.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_al7tw"]
+radius = 117.01
+
+[node name="RedRocketTower" type="StaticBody2D"]
+scale = Vector2(2, 2)
+script = ExtResource("1_j4yhu")
+BulletScene = ExtResource("2_jf32y")
+Damage = 50
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-5.75, -0.25)
+shape = SubResource("RectangleShape2D_ooj8i")
+
+[node name="HitRadius" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitRadius"]
+shape = SubResource("CircleShape2D_al7tw")
+
+[node name="RocketMarker" type="Marker2D" parent="."]
+position = Vector2(33, -0.5)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+texture = ExtResource("1_y7otr")
+
+[node name="FireTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[connection signal="body_entered" from="HitRadius" to="." method="OnBodyEntered"]
+[connection signal="body_exited" from="HitRadius" to="." method="OnBodyExited"]
+[connection signal="timeout" from="FireTimer" to="." method="OnFireTimerExpired"]

@@ -2024,7 +2024,7 @@ public partial class Wave : Node
     public double Delay { get; set; }	
     
     [Export]
-    public PackedScene EnemyScene { get; set;}
+    public PackedScene LevelPath { get; set;}
     
     [Export]
     public Node2D Parent { get; set;}
@@ -2053,7 +2053,7 @@ public partial class Wave : Node
             SpawnTimer.Stop();
         }
     
-        Path2D enemy = EnemyScene.Instantiate<Path2D>();
+        Path2D enemy = LevelPath.Instantiate<Path2D>();
         Parent.CallDeferred("add_child", enemy);
     }
     
@@ -2082,5 +2082,8 @@ Vi skal
 - Få vores tower til at skyde med den
 - Sørge for at vores enemies kan dø
 - Lave vores Wave, så den kan spawne forskellige enemies
+- Opgrader towers
+- Træk towers ind på mappet
+- Lav pointsystem, så vi kan tjene point til upgrades
 
 </details>

@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://2dx3lun8u3aw"]
+
+[ext_resource type="Script" path="res://scripts/Wave.cs" id="1_qmfue"]
+
+[node name="Wave" type="Node"]
+script = ExtResource("1_qmfue")
+
+[node name="SpawnTimer" type="Timer" parent="."]
+
+[node name="DelayTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="SpawnTimer" to="." method="OnSpawnTimerExpired"]
+[connection signal="timeout" from="DelayTimer" to="." method="OnDelayTimerExpired"]
