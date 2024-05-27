@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5pviay3od27q"]
+
+[ext_resource type="Script" path="res://scripts/Hud.cs" id="1_u6qje"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ih87t"]
+font_size = 42
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_u6qje")
+
+[node name="Health" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "HEALTH: 9999"
+label_settings = SubResource("LabelSettings_ih87t")

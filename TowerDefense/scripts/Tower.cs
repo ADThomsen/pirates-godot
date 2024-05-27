@@ -52,7 +52,7 @@ public partial class Tower : StaticBody2D
 		if (EnemiesInSight.Count > 0)
 		{
 			Bullet bullet = BulletScene.Instantiate<Bullet>();
-			bullet.Target = EnemiesInSight.First();
+			bullet.Enemy = EnemiesInSight.First();
 			bullet.Damage = Damage;
 			bullet.GlobalPosition = RocketMarker.Position;
 			CallDeferred("add_child", bullet);

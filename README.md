@@ -2074,13 +2074,132 @@ Prøv nu om du kan bruge din `Wave`-scene i din `Main`-scene til at spawne enemi
 </details>
 
 <details>
+<summary>Eventsystem</summary>
+
+Vi skal bruge et system til at sende beskeder mellem vores scener. Tidligere har vi brugt Signals, men det er ikke fleksibelt nok til vores Tower Defense-spil. Gå derfor ind i din kode-editor (VS Code eller Visual Studio) og lav en ny fil, kald den `Events.cs`. Den skal have følgende indhold:
+
+```csharp
+using System;
+using System.Collections.Generic;
+using Godot;
+
+static class Events<T>
+{
+    private static Dictionary<string, List<EventHandler>> channels = new();
+    public delegate void EventHandler(T sender, string channel, object[] args);
+    public class Subscription : IDisposable
+    {
+        private EventHandler handler;
+        private string channel;
+        public bool IsDisposed { get; private set; } = false;
+        public Subscription(string channel, EventHandler handler) {
+            this.handler = handler;
+            this.channel = channel;
+        }
+        public void Dispose()
+        {
+            if (IsDisposed) 
+                return;
+            
+            IsDisposed = true;
+            if (channels.TryGetValue(channel, out var handlers))
+                handlers.Remove(handler);
+        }
+    }
+    
+    public static Subscription Subscribe(string channel, EventHandler handler) {
+        List<EventHandler> listeners;
+        if (channels.ContainsKey(channel))
+            listeners = channels[channel];
+        else
+            channels[channel] = listeners = new();
+        listeners.Add(handler);
+        return new Subscription(channel, handler);
+    }
+
+    public static int Publish(T sender, string channel, params object[] args) {
+        if (!channels.TryGetValue(channel, out var handlers)) 
+            return 0;
+        handlers.ForEach(handler => handler(sender, channel, args));
+        return handlers.Count;
+    }
+}
+```
+
+I behøver ikke forstå koden, men det I skal vide er, hvordan man bruger det. Vil man fx sende et event fra sit `Enemy`-script, kan man gøre sådan her:
+
+```csharp
+Events<Enemy>.Publish(this, "enemy_reached_end");
+```
+
+Hvis man så fra sit `Main`-script vil lytte efter det event, kan man gøre det sådan her:
+
+```csharp
+// i _Ready
+Events<Enemy>.Subscribe("enemy_reached_end", EnemyReachedEnd);
+```
+
+Og så lave en metode, der ser sådan her ud:
+
+```csharp
+private void EnemyReachedEnd(Enemy enemy, string channel, object[] args) {
+    
+}
+```
+
+</details>
+
+<details>
+<summary>Health</summary>
+
+Vi skal lave det, så spillet slutter, hvis for mange enemies når til enden af banen. Når en enemy når enden, mister man så meget liv som den enemy har tilbage.
+
+Vi skal:
+
+1. Lave en scene, hvor vi kan vise vores health
+2. Tælle vores health ned, hver gang en enemy når enden af banen
+
+**Vis Health**
+
+Vi skal gøre meget af det samme som vi gjorde, da vi lavede vores HUD i Asteroids. Så start med at:
+
+- Gå til din `Main`-scene og tilføj en `CanvasLayer` og kald den `UI`. Under den laver du en `Control` og kalder den `HUD`.
+- Højreklik på `HUD` og vælg `Save Branch as Scene`. Kald den `hud.tscn` og gem den i din `scenes`-mappe.
+
+Se om du kan tilføje tekst på din nye `HUD`-scene, der viser hvor meget health spilleren har tilbage. Du skal bruge en `Label`.
+
+Sørg for at tilføje et script til din `HUD`-scene og kald det `Hud.cs`.
+
+**Sæt health fra `Main`**
+
+I vores `Main`-scene skal vi have en property, der holder styr på vores health og en property der giver os mulighed for at kommunikere med vores HUD. Det skal se sådan her ud:
+
+```csharp
+public int Health { get; set; }
+public Hud Hud { get; set; }
+```
+
+I din `_Ready`-metode skal du tilføje følgende kode:
+
+```csharp
+Hud = GetNode<Hud>("UI/HUD");
+Health = 1000;
+```
+
+Lav nu følgende:
+
+- En metode i `Hud.cs`, der tager en `int` som input og opdaterer teksten på din `Label` til at vise health
+- En linje kode i `_Ready` i `Main.cs`, som kalder vores nye metode i `Hud.cs` og viser vores health
+- Et event fra `Enemy.cs`, der bliver sendt, når en enemy når enden af banen
+- Subscribe til det event i `Main.cs` og tæl health ned (se trin ovenfor med eksempel)
+
+</details>
+
+<details>
 <summary>Huskeliste</summary>
 
 Vi skal
 
-- Lave en `Bullet`-scene
-- Få vores tower til at skyde med den
-- Sørge for at vores enemies kan dø
 - Lave vores Wave, så den kan spawne forskellige enemies
 - Opgrader towers
 - Træk towers ind på mappet

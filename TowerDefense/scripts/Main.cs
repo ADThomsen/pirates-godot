@@ -2,19 +2,19 @@ using Godot;
 
 public partial class Main : Node2D
 {
-	[Export]
-    public PackedScene EnemyScene { get; set; }
-
-    public Node2D EnemySpawner { get; set; } = new Node2D();
+    public int Health { get; set; }
+    public Hud Hud { get; set; }
 
     public override void _Ready()
     {
-        EnemySpawner = GetNode<Node2D>("EnemySpawner");
+        Hud = GetNode<Hud>("UI/HUD");
+        Health = 1000;
+        Hud.SetHealth(Health);
+        Events<Enemy>.Subscribe("enemy_reached_end", EnemyReachedEnd);
     }
 
-    public void OnEnemyTimerFired()
-    {
-        Path2D enemy = EnemyScene.Instantiate<Path2D>();
-		EnemySpawner.CallDeferred("add_child", enemy);
+    private void EnemyReachedEnd(Enemy enemy, string channel, object[] args) {
+        Health -= enemy.Health;
+        Hud.SetHealth(Health);
     }
 }

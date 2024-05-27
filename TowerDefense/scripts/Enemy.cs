@@ -21,6 +21,7 @@ public partial class Enemy : CharacterBody2D
 
 		if (Parent.ProgressRatio >= 1)
 		{
+			Events<Enemy>.Publish(this, "enemy_reached_end");
 			Parent.QueueFree();
 		}
 	}

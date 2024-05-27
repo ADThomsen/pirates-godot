@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c6w2y7gugg3p4"]
+[gd_scene load_steps=10 format=3 uid="uid://c6w2y7gugg3p4"]
 
 [ext_resource type="Script" path="res://scripts/Main.cs" id="1_yg676"]
 [ext_resource type="Texture2D" uid="uid://cbexqy4byviy8" path="res://assets/tilemaps/towerDefense_tilesheet.png" id="1_yhenm"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cqnwscdj8p5lw" path="res://scenes/towers/red_rocket_tower.tscn" id="4_ou1me"]
 [ext_resource type="PackedScene" uid="uid://2dx3lun8u3aw" path="res://components/wave.tscn" id="5_iud4f"]
 [ext_resource type="PackedScene" uid="uid://c5lri1ectwxic" path="res://scenes/greenenemy.tscn" id="6_682c1"]
+[ext_resource type="PackedScene" uid="uid://c5pviay3od27q" path="res://scenes/hud.tscn" id="7_6cl0h"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gv4yd"]
 texture = ExtResource("1_yhenm")
@@ -4373,7 +4374,6 @@ sources/0 = SubResource("TileSetAtlasSource_gv4yd")
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_yg676")
-EnemyScene = ExtResource("2_gk4jo")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_s6n3w")
@@ -4400,3 +4400,7 @@ WaveCount = 10.0
 LevelPath = ExtResource("2_gk4jo")
 Parent = NodePath("../EnemySpawner")
 EnemyScene = ExtResource("6_682c1")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="UI" instance=ExtResource("7_6cl0h")]

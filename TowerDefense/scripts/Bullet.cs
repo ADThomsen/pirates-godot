@@ -4,16 +4,16 @@ public partial class Bullet : CharacterBody2D
 {
 	public float Speed = 300.0f;
 
-	public CharacterBody2D Target { get; set; }
+	public Enemy Enemy { get; set; }
 	public int Damage { get; set; }
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if (Target != null)
+		if (Enemy != null)
 		{
-			Velocity = GlobalPosition.DirectionTo(Target.GlobalPosition) * Speed;
+			Velocity = GlobalPosition.DirectionTo(Enemy.GlobalPosition) * Speed;
 
-			LookAt(Target.GlobalPosition);
+			LookAt(Enemy.GlobalPosition);
 		}
 
 		MoveAndSlide();
