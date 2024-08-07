@@ -19,13 +19,10 @@ Vi vil lave et racerspil for to spillere, som skal have følgende features:
 4. Åben en terminal i den mappe og kør følgende kommandoer:
 
 ```bash
-git clone git clone https://github.com/ADThomsen/pirates-godot.git
+git clone https://github.com/ADThomsen/pirates-godot.git
 cd pirates-godot
+pwsh setup.ps1
 ```
 
-6. Åben filen, der hedder `update.ps1` og skriv dit navn i den øverste linje
-7. Luk filen igen og kør følgende kommando i terminalen:
+Nu er der en mappe under inde i `Racing`-mappen med dit fornavn. **Det er her du skal lave dit projekt**.
 
-```bash
-pwsh .\update.ps1
-```
