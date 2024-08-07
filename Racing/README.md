@@ -28,4 +28,5 @@ Nu er der en mappe under inde i `Racing`-mappen med dit fornavn. I den mappe fin
 
 ## Lav spillet
 
-Lad os komme i gang med at lave spillet
+Lad os komme i gang med at lave spillet. Start med at åbne Godot og åbne projektet i mappen med dit navn inde i `Racing`-mappen.
+
