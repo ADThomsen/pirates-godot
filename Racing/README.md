@@ -24,5 +24,8 @@ cd pirates-godot
 pwsh setup.ps1
 ```
 
-Nu er der en mappe under inde i `Racing`-mappen med dit fornavn. **Det er her du skal lave dit projekt**.
+Nu er der en mappe under inde i `Racing`-mappen med dit fornavn. I den mappe finder du starten på vores spil.
 
+## Lav spillet
+
+Lad os komme i gang med at lave spillet
