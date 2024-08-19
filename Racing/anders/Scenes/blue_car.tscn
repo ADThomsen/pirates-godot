@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cq4viqhqwx3a5"]
+
+[ext_resource type="Texture2D" uid="uid://jdmi8tjpkp1n" path="res://Assets/PNG/Cars/car_blue_1.png" id="1_orgpl"]
+[ext_resource type="Script" path="res://Scripts/Car.cs" id="1_uihkd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t6qek"]
+size = Vector2(61, 123)
+
+[node name="BlueCar" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_uihkd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+texture = ExtResource("1_orgpl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2.5, -0.5)
+rotation = 1.58708
+shape = SubResource("RectangleShape2D_t6qek")
