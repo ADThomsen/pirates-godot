@@ -111,4 +111,20 @@ public partial class Car : CharacterBody2D
         Vector2 dragForce = Velocity * Velocity.Length() * Drag * delta;
         Acceleration += dragForce + frictionForce;
     }
+    
+    public void OnBodyEntered(Node body)
+    {
+        if (body is Mud)
+        {
+            Friction = -400f;
+        }
+    }
+    
+    public void OnBodyExited(Node body)
+    {
+        if (body is Mud)
+        {
+            Friction = -55f;
+        }
+    }
 }

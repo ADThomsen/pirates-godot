@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dwsbrrbgce7mx"]
+
+[ext_resource type="Texture2D" uid="uid://ou867qi1dex6" path="res://Assets/PNG/Tiles/Dirt/land_dirt05.png" id="1_0w1o2"]
+[ext_resource type="Script" path="res://Scripts/Mud.cs" id="1_qrwni"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sqp5b"]
+size = Vector2(128, 128)
+
+[node name="Mud" type="Area2D"]
+visibility_layer = 2
+collision_layer = 2
+script = ExtResource("1_qrwni")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_0w1o2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_sqp5b")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)

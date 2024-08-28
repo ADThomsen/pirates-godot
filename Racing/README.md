@@ -39,3 +39,14 @@ Når du kører rundt, vil du opdage at du kan køren igennem nogle vægge, men i
 ### Opgave 2: Kollision
 
 Vi vil gerne have at bilen ikke kan køre igennem væggene. Det gør vi ved at tilføje collissions til vores TileMap. Følg step 4 i denne guide: https://www.nightquestgames.com/adding-collision-to-tilemaps-in-godot-4/
+
+### Opgave 3: Øget friktion
+
+Vi vil gerne have at bilen mister fart, når den kører igennem fx noget mudder. Sørg for at din bane har et stykke, hvor bilen vil køre langsommere.
+
+Ting vi skal gøre:
+
+- Tilføj en `Area2D`-node til bilen og giv den en collision shape
+- I scriptet til bilen, skal vi have to metoder. En til OnAreaEntered og en til OnAreaExited.
+- I OnAreaEntered skal vi sætte friktionen til en lavere værdi, og i OnAreaExited skal vi sætte friktionen tilbage til normal.
+- Lav en ny scene, hvor vi bruger billeder fra vores Assets til at lave noget mudder. Den skal være af typen `Area2D`
