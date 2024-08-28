@@ -99,7 +99,7 @@ For at vores bold skal kunne blive på skærmen, skal vi lave nogle vægge som d
     <summary>7. Få bolden til at bevæge sig</summary>
 
 1. Gå tilbage til din `Ball`-scene og klik på `Attach script`-knappen i venstre side a skærmen (den har et grønt kryds).
-2. Sæt `Language` til `C#` og `Path` til `res://Ball.cs` (:grey_exclamation: sørg for at det er med stort B).
+2. Sæt `Language` til `C#` og `Path` til `res://Ball.cs` ( :grey_exclamation: sørg for at det er med stort B).
 3. Udskift indholdet i `Ball.cs` med følgende:
 
 ```csharp
@@ -235,7 +235,7 @@ Bricks er de ting, som bolden skal ramme. Vi skal bruge en ny scene til dem.
 Bricks skal forsvinde når bolden rammer dem.
 
 1. Gå tilbage til din `Ball`-scene og klik på `Attach script`-knappen i venstre side a skærmen (den har et grønt kryds).
-2. Sæt `Language` til `C#` og `Path` til `res://Ball.cs` (:grey_exclamation: sørg for at det er med stort B).
+2. Sæt `Language` til `C#` og `Path` til `res://Ball.cs` ( :grey_exclamation: sørg for at det er med stort B).
 
 Der skal kodes to ting for at få bolden til at ødelægge bricks:
 
@@ -379,7 +379,7 @@ Hvis du kan huske det fra Arkanoid, så skal vi bruge `Project -> Project Settin
 
 1. Vælg `Player`-scenen og klik på `Player`-objektet i venstre side af skærmen.
 2. Klik på `Attach script`-knappen i venstre side a skærmen (den har et grønt kryds).
-3. Sæt `Language` til `C#` og `Path` til `res://scripts/Player.cs` (:grey_exclamation: sørg for at det er med stort P).
+3. Sæt `Language` til `C#` og `Path` til `res://scripts/Player.cs` ( :grey_exclamation: sørg for at det er med stort P).
 4. Udskift indholdet i `Player.cs` med følgende:
 
 ```csharp
@@ -535,7 +535,7 @@ Næste step er at få vores rumskib til at skyde med laser. Vi starter med at ti
 ![laser-position.png](files/laser-position.png)
 
 5. For din `CollisionShape2D` finder du `Shape` og vælger `CapsuleShape2D`. Sørg for at den passer med din `Sprite2D`.
-6. Tilføj et script til din `Laser` og kald det `Laser.cs`. Sæt `Language` til `C#` og `Path` til `res://scripts/Laser.cs` (:grey_exclamation: sørg for at det er med stort L).
+6. Tilføj et script til din `Laser` og kald det `Laser.cs`. Sæt `Language` til `C#` og `Path` til `res://scripts/Laser.cs` ( :grey_exclamation: sørg for at det er med stort L).
 7. Udskift indholdet i `Laser.cs` med følgende:
 
 ```csharp
@@ -631,7 +631,7 @@ Den vigtigste del af koden er `EmitSignal(SignalName.LaserFired, laser);`. Det e
 #### Kode til `Main`
 
 1. Gå til din `Main`-scene og tilføj en `Node` til din `Main`. Kald den `Lasers`. Det er her vi skal tilføje vores lasere. Det hjælper til holde vores scene ren og overskuelig.
-2. Tilføj nu et script til din `Main`-scene og kald det `Main.cs`. Sæt `Language` til `C#` og `Path` til `res://scripts/Main.cs` (:grey_exclamation: sørg for at det er med stort M).
+2. Tilføj nu et script til din `Main`-scene og kald det `Main.cs`. Sæt `Language` til `C#` og `Path` til `res://scripts/Main.cs` ( :grey_exclamation: sørg for at det er med stort M).
 3. Udskift indholdet i `Main.cs` med følgende:
 
 ```csharp
@@ -673,7 +673,7 @@ Næste step er at tilføje asteroider til vores spil, så vores spiller har noge
 2. Tilføj en `CollisionShape2D` og en `Sprite2D` til din `Asteroid`.
 3. I `Sprite2D` skal vi bruge den sprite der hedder `meteorGrey_big4.png`.
 4. For vores `CollisionShape2D` skal vi bruge en `CircleShape2D`. Sørg for at den passer så godt som muligt med din `Sprite2D`.
-5. Tilføj et script til din `Asteroid` og kald det `Asteroid.cs`. Sæt `Language` til `C#` og `Path` til `res://scripts/Asteroid.cs` (:grey_exclamation: sørg for at det er med stort A).
+5. Tilføj et script til din `Asteroid` og kald det `Asteroid.cs`. Sæt `Language` til `C#` og `Path` til `res://scripts/Asteroid.cs` ( :grey_exclamation: sørg for at det er med stort A).
 6. Udskift indholdet i `Asteroid.cs` med følgende:
 
 ```csharp
