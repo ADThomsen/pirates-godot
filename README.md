@@ -34,7 +34,7 @@ Alt i Godot foregår i scener. En scene er en samling af objekter, som kan være
 
 Skift først til `2D` mode i toppen af skærmen. Følg derefter disse trin:
 
-1. Klik på ` :heavy_plus_sign: Other Node` i venstre side.
+1. Klik på `+ Other Node` i venstre side.
 2. Vælg den øverste mulighed, som bare hedder `Node` og klik Create.
 3. Dobbeltklik på `Node` i venstre side og skriv `Main` i stedet.
 4. Klik på `Project -> Project Settings` i toppen af skærmen og vælg `Window`.
