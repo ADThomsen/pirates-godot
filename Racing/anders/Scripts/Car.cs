@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using RacingGame.Scripts;
 
 public partial class Car : CharacterBody2D
 {
@@ -24,6 +25,8 @@ public partial class Car : CharacterBody2D
     [Export] public float EnginePower = 900.0f;
 
     [Export] public float RotationSpeed = 6.0f;
+    
+    [Export] public Texture2D CarTexture { get; set; }
 
     private StringName Left { get; set; }
     private StringName Right { get; set; }
@@ -33,6 +36,7 @@ public partial class Car : CharacterBody2D
     private Vector2 Acceleration = Vector2.Zero;
     private const float SteeringAngle = 15;
     private const float WheelBase = 70;
+    public Sprite2D Sprite;
 
     public override void _Ready()
     {
@@ -48,6 +52,20 @@ public partial class Car : CharacterBody2D
         InputMap.ActionAddEvent(Right, RightKey);
         InputMap.ActionAddEvent(Forward, ForwardKey);
         InputMap.ActionAddEvent(Reverse, ReverseKey);
+        
+        Sprite = GetNode<Sprite2D>("Sprite2D");
+        Sprite.Texture = CarTexture;
+        
+        EventHub.Subscribe<string>("PlayerFinishedRace", OnPlayerFinishedRace);
+    }
+
+    private void OnPlayerFinishedRace(object sender, string e)
+    {
+        if (e == PlayerName)
+        {
+            Braking = 0;
+            EnginePower = 0;
+        }
     }
 
     public override void _PhysicsProcess(double delta)
@@ -117,6 +135,10 @@ public partial class Car : CharacterBody2D
         if (body is Mud)
         {
             Friction = -400f;
+        }
+        else if (body is GoalLine)
+        {
+            EventHub.Publish("PlayerCrossedFinishLine", this, PlayerName);
         }
     }
     

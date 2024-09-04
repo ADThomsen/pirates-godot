@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3jm6bmp86jnr"]
+
+[ext_resource type="Script" path="res://Scripts/GoalLine.cs" id="1_yl63i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jspq5"]
+size = Vector2(15, 80)
+
+[node name="GoalLine" type="Area2D"]
+collision_layer = 2
+script = ExtResource("1_yl63i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_jspq5")
