@@ -17,23 +17,23 @@ public partial class GameManager : Node2D
 		foreach (Car car in cars)
 		{
 			PlayerLaps.Add(car.PlayerName, 0);
+			EventHub.Publish("PlayerJoinedRace", this, car.PlayerName);
 		}
-		EventHub.Publish("PlayerStartedLap", this, PlayerLaps);
 		
 		EventHub.Subscribe<string>("PlayerCrossedFinishLine", OnPlayerCrossedFinishLine);
 	}
 	
-	private void OnPlayerCrossedFinishLine(object sender, string e)
+	private void OnPlayerCrossedFinishLine(object sender, string playerName)
 	{
-		PlayerLaps[e] += 1;
+		PlayerLaps[playerName] += 1;
 
-		if (PlayerLaps[e] > LapCount)
+		if (PlayerLaps[playerName] > LapCount)
 		{
-			EventHub.Publish("PlayerFinishedRace", this, e);
+			EventHub.Publish("PlayerFinishedRace", this, playerName);
 			return;
 		}
 		
-		EventHub.Publish("PlayerStartedLap", this, PlayerLaps);
+		EventHub.Publish("PlayerStartedLap", this, playerName);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

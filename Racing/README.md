@@ -123,6 +123,19 @@ Vi vil gerne have at vi kan køre over målstregen og få en besked om at vi har
 
 ### Opgave 7: HUD
 
+Vi deler HUD-opgaven op i to:
+
+- En simpel HUD, som bare viser hver spillers navn og hvilken omgang de er i gang med
+- En mere avanceret HUD, som viser tidtagning og hvor mange omgange der er i alt
+
+Vi starter med den simple:
+
+- Lav en ny scene `HUD` af typen `Control` og tilføj en `Label`
+- Fra `GameManager.cs` skal vi `Publish` to beskeder:
+  - En besked for hver spiller, når spillet starter. Kald den `PlayerJoinedRace`
+  - En besked for hver spiller, når de krydser målstregen. Kald den `PlayerStartedLap`
+- `Subscribe` til `PlayerJoinedRace` og `PlayerStartedLap` i `HUD.cs` og opdater teksten i `Label`-noden
+
 ### Opagve 8: Tidtagning
 
 ### Opgave 9: Highscore
