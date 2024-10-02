@@ -1954,6 +1954,8 @@ Start spillet og hør din skønne laser-lyd.
 
 ## Tower Defense
 
+[Tower Defense Guide](https://medium.com/codex/making-a-simple-2d-tower-defense-game-in-godot-c-a70a5a9d2bf3)
+
 <details>
 <summary>Lav en Path</summary>
 
