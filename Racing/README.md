@@ -14,7 +14,7 @@ Vi vil lave et racerspil for to spillere, som skal have følgende features:
 
 1. Tjek at Godot 4 er installeret på din computer (.NET-udgaven) https://godotengine.org/download/
 2. Installer Visual Studio eller Visual Studio Code https://visualstudio.microsoft.com/downloads/
-3. Download dette repository ved at trykke på den grønne knap "Code" og vælg "Download ZIP"
+3. Download dette repository ved at trykke på [dette link](https://github.com/ADThomsen/pirates-godot/tree/19436962c451f06d9841405f8cd11cc20062f197) og finde den grønne knap "Code" og vælg "Download ZIP"
 4. Pak filen up og åben mappen `Racing`
 5. Kopier mappen `anders` og giv kopien dit eget navn
 
