@@ -25,13 +25,14 @@ public partial class Car : CharacterBody2D
     [Export] public float EnginePower = 900.0f;
 
     [Export] public float RotationSpeed = 6.0f;
-    
+
     [Export] public Texture2D CarTexture { get; set; }
 
     private StringName Left { get; set; }
     private StringName Right { get; set; }
     private StringName Forward { get; set; }
     private StringName Reverse { get; set; }
+    public bool IsRaceStarted = false;
 
     private Vector2 Acceleration = Vector2.Zero;
     private const float SteeringAngle = 15;
@@ -52,11 +53,17 @@ public partial class Car : CharacterBody2D
         InputMap.ActionAddEvent(Right, RightKey);
         InputMap.ActionAddEvent(Forward, ForwardKey);
         InputMap.ActionAddEvent(Reverse, ReverseKey);
-        
+
         Sprite = GetNode<Sprite2D>("Sprite2D");
         Sprite.Texture = CarTexture;
-        
+
         EventHub.Subscribe<string>("PlayerFinishedRace", OnPlayerFinishedRace);
+        EventHub.Subscribe<string>("RaceStarted", OnRaceStarted);
+    }
+
+    private void OnRaceStarted(object sender, string _)
+    {
+        IsRaceStarted = true;
     }
 
     private void OnPlayerFinishedRace(object sender, string e)
@@ -70,6 +77,11 @@ public partial class Car : CharacterBody2D
 
     public override void _PhysicsProcess(double delta)
     {
+        if (!IsRaceStarted)
+        {
+            return;
+        }
+        
         SetAcceleration((float)delta);
         SetSteering((float)delta);
 
@@ -129,7 +141,7 @@ public partial class Car : CharacterBody2D
         Vector2 dragForce = Velocity * Velocity.Length() * Drag * delta;
         Acceleration += dragForce + frictionForce;
     }
-    
+
     public void OnBodyEntered(Node body)
     {
         if (body is Mud)
@@ -141,7 +153,7 @@ public partial class Car : CharacterBody2D
             EventHub.Publish("PlayerCrossedFinishLine", this, PlayerName);
         }
     }
-    
+
     public void OnBodyExited(Node body)
     {
         if (body is Mud)
