@@ -218,3 +218,298 @@
    - **Opgaver**: 
      - Lav spillet om, så man både kan tilføje og fjerne fjender.
      - Lav spillet, så det starter forfra og man kan tilføje eller fjerne en fjende mere.
+
+## Modul 5: Funktioner
+
+**Formål**: Lær at lave funktioner for at strukturere koden bedre.
+
+### Startkode
+
+Nedenfor ser du et simpelt program, som indeholder en kamp mellem en spiller og en fjende. Din opgave er at udvide dette program ved hjælp af funktioner for at gøre koden mere overskuelig og genbrugelig.
+
+```csharp
+using System;
+
+namespace Kampmekanik
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int spillerHelbred = 100;
+            int fjendeHelbred = 80;
+            int spillerStyrke = 10;
+            int fjendeStyrke = 8;
+
+            Console.WriteLine("Kampen starter!");
+
+            while (spillerHelbred > 0 && fjendeHelbred > 0)
+            {
+                // Spilleren angriber fjenden
+                int skade = spillerStyrke * new Random().Next(1, 4);
+                fjendeHelbred -= skade;
+                Console.WriteLine($"Spilleren angriber og giver {skade} skade! Fjendens helbred er nu {fjendeHelbred}.");
+
+                if (fjendeHelbred <= 0)
+                {
+                    Console.WriteLine("Fjenden er besejret! Du vandt!");
+                    break;
+                }
+
+                // Fjenden angriber spilleren
+                skade = fjendeStyrke * new Random().Next(1, 4);
+                spillerHelbred -= skade;
+                Console.WriteLine($"Fjenden angriber og giver {skade} skade! Spillerens helbred er nu {spillerHelbred}.");
+
+                if (spillerHelbred <= 0)
+                {
+                    Console.WriteLine("Du blev besejret af fjenden...");
+                    break;
+                }
+            }
+        }
+    }
+}
+```
+
+### Opgave 1: Lav en funktion til at beregne skade
+
+- Opret en funktion kaldet `BeregnSkade`, som tager styrke som parameter og returnerer den beregnede skade.
+- Brug funktionen i stedet for at beregne skaden direkte i `Main`-metoden.
+
+**Eksempel**:
+
+```csharp
+static int BeregnSkade(int styrke)
+{
+    Random random = new Random();
+    return styrke * random.Next(1, 4);
+}
+```
+
+### Opgave 2: Lav en funktion til angreb
+
+- Opret en funktion kaldet `Angrib`, som tager angriberens navn, modstanderens navn, modstanderens helbred (som `ref`), og angriberens styrke som parametre.
+- Brug funktionen til at strukturere både spillerens og fjendens angreb.
+
+**Eksempel**:
+
+```csharp
+static void Angrib(string angriber, ref int modstanderHelbred, int styrke)
+{
+    int skade = BeregnSkade(styrke);
+    modstanderHelbred -= skade;
+    Console.WriteLine($"{angriber} angriber og giver {skade} skade! Modstanderens helbred er nu {modstanderHelbred}.");
+}
+```
+
+### Opgave 3: Udvid programmet med flere funktioner
+
+- Lav en funktion kaldet `ErBesejret`, som tager helbred som parameter og returnerer en `bool`, der angiver, om karakteren er besejret.
+- Brug funktionen til at tjekke, om spilleren eller fjenden er besejret, og afslut kampen, hvis det er tilfældet.
+
+**Eksempel**:
+
+```csharp
+static bool ErBesejret(int helbred)
+{
+    return helbred <= 0;
+}
+```
+
+### Opgave 4: Tilføj en forsvarsmekanisme
+
+- Opret en ny funktion kaldet `Forsvar`, som reducerer skaden baseret på en forsvarsværdi.
+- Tilføj en forsvarsværdi til spilleren og fjenden, og brug `Forsvar`-funktionen til at justere skaden, inden den trækkes fra helbredet.
+
+**Eksempel**:
+
+```csharp
+static int Forsvar(int skade, int forsvar)
+{
+    return Math.Max(0, skade - forsvar); // Reducerer skaden med forsvarsværdien, men skaden kan ikke blive mindre end 0
+}
+```
+
+### Opgave 5: Test og tilpas
+
+- Test dit program og se, hvordan de nye funktioner virker sammen.
+- Tilpas funktionerne eller tilføj nye, fx en helbredspotion, der kan bruges under kampen.
+
+### Opsummering
+
+- I denne opgave har du lært at oprette og bruge funktioner til at strukturere din kode bedre.
+- Du har gjort koden mere overskuelig ved at opdele den i mindre dele, som kan genbruges.
+
+Prøv at eksperimentere med at tilføje flere funktioner og se, hvordan det gør dit program lettere at vedligeholde og udvide.
+
+
+## Modul 6: Klasser og objekter
+
+**Formål**: Lær at lave klasser og objekter for at skabe komplekse datastrukturer og organisere din kode bedre.
+
+### Startkode
+Nedenfor ser du et simpelt program, der indeholder en spiller, som bevæger sig igennem en labyrint bestående af rum og døre. Din opgave er at udvide dette program ved at tilføje nye klasser og funktionalitet, så det bliver til et lille konsolbaseret RPG.
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+class Rum
+{
+    public string Navn;
+    public string Beskrivelse;
+    public Dictionary<string, Rum> Udgange;
+
+    public Rum(string navn, string beskrivelse)
+    {
+        Navn = navn;
+        Beskrivelse = beskrivelse;
+        Udgange = new Dictionary<string, Rum>();
+    }
+
+    public void VisInfo()
+    {
+        Console.WriteLine($"Du er i {Navn}. {Beskrivelse}");
+        Console.WriteLine("Mulige udgange: " + string.Join(", ", Udgange.Keys));
+    }
+}
+
+class Spiller
+{
+    public string Navn;
+    public int Helbred;
+
+    public Spiller(string navn, int helbred)
+    {
+        Navn = navn;
+        Helbred = helbred;
+    }
+
+    public void Flyt(string retning)
+    {
+        Console.WriteLine($"{Navn} bevæger sig mod {retning}.");
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Opret spilleren
+        Spiller spiller = new Spiller("Eventyrer", 100);
+
+        // Opret rummene
+        Rum indgangsHallen = new Rum("Indgangshallen", "Du står i en stor hal med stenbelagte vægge.");
+        Rum korridoren = new Rum("Korridoren", "En smal og mørk korridor.");
+        Rum skattekammeret = new Rum("Skattekammeret", "Et lille rum fyldt med guld og skatte.");
+        Rum fjendensRum = new Rum("Fjendens Lair", "Et truende rum med en fjende, der vogter indgangen.");
+
+        // Definér udgange
+        indgangsHallen.Udgange.Add("øst", korridoren);
+        korridoren.Udgange.Add("vest", indgangsHallen);
+        korridoren.Udgange.Add("øst", skattekammeret);
+        korridoren.Udgange.Add("syd", fjendensRum);
+        skattekammeret.Udgange.Add("vest", korridoren);
+        fjendensRum.Udgange.Add("nord", korridoren);
+
+        // Tegn din labyrint først på papir for at få overblik
+
+        // Start spillet
+        Rum nuværendeRum = indgangsHallen;
+        Rum forrigeRum = null;
+
+        Console.WriteLine("Velkommen til labyrinten!");
+        while (spiller.Helbred > 0)
+        {
+            nuværendeRum.VisInfo();
+            Console.WriteLine("Hvor vil du gå?");
+            string retning = Console.ReadLine().ToLower();
+
+            if (nuværendeRum.Udgange.ContainsKey(retning))
+            {
+                forrigeRum = nuværendeRum;
+                nuværendeRum = nuværendeRum.Udgange[retning];
+                spiller.Flyt(retning);
+
+                // Hvis spilleren går ind i fjendens rum
+                if (nuværendeRum == fjendensRum)
+                {
+                    Console.WriteLine("En fjende angriber dig!");
+                    spiller.Helbred -= 20;
+                    Console.WriteLine($"{spiller.Navn} tager 20 skade og har nu {spiller.Helbred} helbred tilbage.");
+                    nuværendeRum = forrigeRum; // Send spilleren tilbage til det rum, de kom fra
+                }
+
+                // Hvis spilleren finder skattekammeret
+                if (nuværendeRum == skattekammeret)
+                {
+                    Console.WriteLine("Tillykke! Du har fundet skattekammeret og vundet spillet!");
+                    break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Du kan ikke gå den vej.");
+            }
+        }
+
+        if (spiller.Helbred <= 0)
+        {
+            Console.WriteLine("Du er løbet tør for helbred. Spillet er slut.");
+        }
+    }
+}
+```
+
+### Opgave 1: Opret flere rum og planlæg din labyrint
+- Start med at tegne din labyrint på papir. Planlæg, hvor rummene skal være, og hvordan de hænger sammen.
+- Opret flere instanser af `Rum`-klassen og forbind dem ved hjælp af `Udgange`-dictionaryen, så spilleren kan navigere rundt i labyrinten.
+
+**Eksempel**:
+```csharp
+Rum rum2 = new Rum("Biblioteket", "Et rum fyldt med støvede bøger.");
+korridoren.Udgange.Add("nord", rum2);
+rum2.Udgange.Add("syd", korridoren);
+```
+
+### Opgave 2: Tilføj fjender i flere rum
+- Tilføj flere `Fjende`-instanser i forskellige rum.
+- Hvis spilleren går ind i et rum med en fjende, skal fjenden angribe spilleren, og spilleren skal sendes tilbage til det forrige rum.
+
+**Eksempel**:
+```csharp
+// Hvis spilleren går ind i fjendens rum
+if (nuværendeRum == fjendensRum)
+{
+    Console.WriteLine("En fjende angriber dig!");
+    spiller.Helbred -= 20;
+    Console.WriteLine($"{spiller.Navn} tager 20 skade og har nu {spiller.Helbred} helbred tilbage.");
+    nuværendeRum = forrigeRum; // Send spilleren tilbage til det rum, de kom fra
+}
+```
+
+### Opgave 3: Spillets afslutning
+- Hvis spillerens helbred ryger under 0, skal spillet slutte med en besked om, at spilleren er død.
+- Spilleren vinder spillet, hvis de når til skattekammeret.
+
+**Eksempel**:
+```csharp
+if (spiller.Helbred <= 0)
+{
+    Console.WriteLine("Du er løbet tør for helbred. Spillet er slut.");
+}
+
+if (nuværendeRum == skattekammeret)
+{
+    Console.WriteLine("Tillykke! Du har fundet skattekammeret og vundet spillet!");
+    break;
+}
+```
+
+### Opsummering
+- I denne opgave har du lært at oprette og bruge klasser og objekter for at strukturere din kode bedre.
+- Du har opbygget et simpelt RPG, hvor spilleren kan navigere gennem en labyrint, møde fjender og finde en skat.
+
+Prøv at eksperimentere med at tilføje flere rum, fjender og udfordringer for at gøre dit spil mere spændende og udfordrende.
+
