@@ -1,0 +1,238 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/ConsoleRunner/ConsoleRunner.csproj": {}
+  },
+  "projects": {
+    "/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/ConsoleRunner/ConsoleRunner.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/ConsoleRunner/ConsoleRunner.csproj",
+        "projectName": "ConsoleRunner",
+        "projectPath": "/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/ConsoleRunner/ConsoleRunner.csproj",
+        "packagesPath": "/Users/dkAndTho/.nuget/packages/",
+        "outputPath": "/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/ConsoleRunner/obj/",
+        "projectStyle": "PackageReference",
+        "UsingMicrosoftNETSdk": false,
+        "configFilePaths": [
+          "/Users/dkAndTho/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.pkg.github.com/LEGO/index.json": {},
+          "https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet8/nuget/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Demo/Demo.csproj": {
+                "projectPath": "/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Demo/Demo.csproj"
+              },
+              "/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Quest/Quest.csproj": {
+                "projectPath": "/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Quest/Quest.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "all"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.5, 8.0.5]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.osx-arm64",
+              "version": "[8.0.5, 8.0.5]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.5, 8.0.5]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/Users/dkAndTho/.dotnet/sdk/9.0.100-preview.6.24328.19/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Demo/Demo.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Demo/Demo.csproj",
+        "projectName": "Demo",
+        "projectPath": "/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Demo/Demo.csproj",
+        "packagesPath": "/Users/dkAndTho/.nuget/packages/",
+        "outputPath": "/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Demo/obj/",
+        "projectStyle": "PackageReference",
+        "UsingMicrosoftNETSdk": false,
+        "configFilePaths": [
+          "/Users/dkAndTho/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.pkg.github.com/LEGO/index.json": {},
+          "https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet8/nuget/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "all"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Towel": {
+              "target": "Package",
+              "version": "[1.0.40, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.5, 8.0.5]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.5, 8.0.5]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/Users/dkAndTho/.dotnet/sdk/9.0.100-preview.6.24328.19/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Quest/Quest.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Quest/Quest.csproj",
+        "projectName": "Quest",
+        "projectPath": "/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Quest/Quest.csproj",
+        "packagesPath": "/Users/dkAndTho/.nuget/packages/",
+        "outputPath": "/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Quest/obj/",
+        "projectStyle": "PackageReference",
+        "UsingMicrosoftNETSdk": false,
+        "configFilePaths": [
+          "/Users/dkAndTho/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.pkg.github.com/LEGO/index.json": {},
+          "https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet8/nuget/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "all"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.5, 8.0.5]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.5, 8.0.5]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/Users/dkAndTho/.dotnet/sdk/9.0.100-preview.6.24328.19/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

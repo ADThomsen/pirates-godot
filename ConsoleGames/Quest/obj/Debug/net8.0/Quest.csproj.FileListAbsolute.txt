@@ -1,0 +1,12 @@
+/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Quest/bin/Debug/net8.0/Quest.deps.json
+/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Quest/bin/Debug/net8.0/Quest.dll
+/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Quest/bin/Debug/net8.0/Quest.pdb
+/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Quest/obj/Debug/net8.0/Quest.GeneratedMSBuildEditorConfig.editorconfig
+/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Quest/obj/Debug/net8.0/Quest.AssemblyInfoInputs.cache
+/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Quest/obj/Debug/net8.0/Quest.AssemblyInfo.cs
+/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Quest/obj/Debug/net8.0/Quest.csproj.CoreCompileInputs.cache
+/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Quest/obj/Debug/net8.0/Quest.sourcelink.json
+/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Quest/obj/Debug/net8.0/Quest.dll
+/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Quest/obj/Debug/net8.0/refint/Quest.dll
+/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Quest/obj/Debug/net8.0/Quest.pdb
+/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Quest/obj/Debug/net8.0/ref/Quest.dll

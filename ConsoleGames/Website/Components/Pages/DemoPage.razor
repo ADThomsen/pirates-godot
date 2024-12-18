@@ -1,0 +1,32 @@
+﻿@page "/demo"
+@using Website.Games.Demo
+@rendermode InteractiveServer
+
+<PageTitle>Demo Game</PageTitle>
+
+<h1>Demo Game</h1>
+
+<div class="console-window text-center my-3" @onkeydown="@Console.OnKeyDown" tabindex="0">
+    <div class="d-inline-block bg-dark text-light border p-2 text-start shadow padding-0">
+		<pre class="console">
+			<code>@Console.State</code>
+		</pre>
+    </div>
+</div>
+
+@code
+{
+    Demo Game;
+    BlazorConsole Console;
+
+    public DemoPage()
+    {
+        Game = new();
+        Console = Game.Console;
+        Console.WindowWidth = 41;
+        Console.WindowHeight = 19;
+        Console.TriggerRefresh = StateHasChanged;
+    }
+
+    protected override void OnInitialized() => InvokeAsync(Game.Run);
+}

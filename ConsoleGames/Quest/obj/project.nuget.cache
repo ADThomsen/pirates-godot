@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "2lME5H94x5w=",
+  "success": true,
+  "projectFilePath": "/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Quest/Quest.csproj",
+  "expectedPackageFiles": [
+    "/Users/dkAndTho/.nuget/packages/microsoft.netcore.app.ref/8.0.5/microsoft.netcore.app.ref.8.0.5.nupkg.sha512",
+    "/Users/dkAndTho/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.5/microsoft.aspnetcore.app.ref.8.0.5.nupkg.sha512"
+  ],
+  "logs": []
+}

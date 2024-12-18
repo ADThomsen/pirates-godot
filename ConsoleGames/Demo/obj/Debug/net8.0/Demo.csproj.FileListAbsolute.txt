@@ -1,0 +1,13 @@
+/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Demo/bin/Debug/net8.0/Demo.deps.json
+/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Demo/bin/Debug/net8.0/Demo.dll
+/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Demo/bin/Debug/net8.0/Demo.pdb
+/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Demo/obj/Debug/net8.0/Demo.csproj.AssemblyReference.cache
+/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Demo/obj/Debug/net8.0/Demo.GeneratedMSBuildEditorConfig.editorconfig
+/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Demo/obj/Debug/net8.0/Demo.AssemblyInfoInputs.cache
+/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Demo/obj/Debug/net8.0/Demo.AssemblyInfo.cs
+/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Demo/obj/Debug/net8.0/Demo.csproj.CoreCompileInputs.cache
+/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Demo/obj/Debug/net8.0/Demo.sourcelink.json
+/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Demo/obj/Debug/net8.0/Demo.dll
+/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Demo/obj/Debug/net8.0/refint/Demo.dll
+/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Demo/obj/Debug/net8.0/Demo.pdb
+/Users/dkAndTho/code/pirates/pirates-godot/ConsoleGames/Demo/obj/Debug/net8.0/ref/Demo.dll

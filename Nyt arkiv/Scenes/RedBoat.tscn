@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://b20k6pq0bc5db"]
+
+[ext_resource type="Script" path="res://Scripts/Car.cs" id="1_2mqbv"]
+[ext_resource type="Texture2D" uid="uid://b0e2g5deiwl65" path="res://Assets/PNG/boat.png" id="2_skpco"]
+[ext_resource type="Texture2D" uid="uid://diuxs63nwoeve" path="res://Assets/PNG/Characters/character_brown_white.png" id="3_8g2to"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_15ioe"]
+radius = 15.0
+height = 60.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_aqcek"]
+radius = 18.0
+height = 78.0
+
+[node name="boat" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_2mqbv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.427451, 0.423529, 1)
+position = Vector2(1, 0)
+rotation = 1.5708
+scale = Vector2(1.7, 1.569)
+texture = ExtResource("2_skpco")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(15, 0)
+rotation = -1.5708
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("3_8g2to")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(9.31819e-07, 4.76837e-07)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_15ioe")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_aqcek")
+
+[connection signal="area_entered" from="Area2D" to="." method="OnAreaEntered"]
+[connection signal="area_exited" from="Area2D" to="." method="OnAreaExited"]
