@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4gxfeijck4ln"]
+
+[ext_resource type="Script" path="res://components/door/DoorComponent.cs" id="1_75s3d"]
+
+[node name="DoorComponent" type="Area2D"]
+script = ExtResource("1_75s3d")
+
+[connection signal="area_entered" from="." to="." method="OnAreaEntered"]

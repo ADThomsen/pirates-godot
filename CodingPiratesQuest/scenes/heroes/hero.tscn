@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5pyb6glj8lr"]
+
+[ext_resource type="PackedScene" uid="uid://cgl2k737wf62j" path="res://components/presets/hero_preset.tscn" id="1_k00yl"]
+
+[node name="Hero2" instance=ExtResource("1_k00yl")]
