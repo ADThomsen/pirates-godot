@@ -2,5 +2,7 @@
 
 [ext_resource type="Script" path="res://components/health/HealthComponent.cs" id="1_e23ef"]
 
-[node name="HealthComponent" type="Node"]
+[node name="HealthComponent" type="Area2D"]
+light_mask = 16
+visibility_layer = 8
 script = ExtResource("1_e23ef")

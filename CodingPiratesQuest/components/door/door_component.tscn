@@ -3,6 +3,8 @@
 [ext_resource type="Script" path="res://components/door/DoorComponent.cs" id="1_75s3d"]
 
 [node name="DoorComponent" type="Area2D"]
+collision_layer = 2
+collision_mask = 4
 script = ExtResource("1_75s3d")
 
-[connection signal="area_entered" from="." to="." method="OnAreaEntered"]
+[connection signal="body_entered" from="." to="." method="OnAreaEntered"]

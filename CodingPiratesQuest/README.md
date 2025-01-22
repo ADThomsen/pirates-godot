@@ -10,7 +10,12 @@ Er du klar til at starte dit eventyr? ⚔️🌟
 
 ## Indhold
 
-1. [Installation](./docs/installation.md)
-2. [Vælg din verden](./docs/sprites.md)
-3. [Tilføj et nyt rum](./docs/add_room.md)
-4. [Skift rum](./docs/switch_room.md)
+- [Installation](./docs/installation.md)
+- [Vælg din verden](./docs/sprites.md)
+- [Lav Collision Layers](./docs/add_layers.md)
+- [Opdater Components]()
+- [Få spilleren til at angribe](./docs/player_attack_1.md)
+- [Tilføj et nyt rum](./docs/add_room.md)
+- [Skift rum](./docs/switch_room.md)
+- [Lav et `Object` (fx et træ, der kan fældes)](./docs/create_object.md)
+- [Få spillere til at gøre noget ved et `Object` (fx at fælde et træ)](./docs/create_object.md)

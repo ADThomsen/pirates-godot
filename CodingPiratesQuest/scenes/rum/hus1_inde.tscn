@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=4 uid="uid://cyuyylk6wtlu2"]
+[gd_scene load_steps=4 format=4 uid="uid://cyuyylk6wtlu2"]
 
 [ext_resource type="PackedScene" uid="uid://rikoagpjivbv" path="res://components/presets/rum_preset.tscn" id="1_o7btc"]
+[ext_resource type="PackedScene" uid="uid://c4gxfeijck4ln" path="res://components/door/door_component.tscn" id="2_n2oli"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vlum7"]
 
 [node name="Rum" instance=ExtResource("1_o7btc")]
 
@@ -16,3 +19,10 @@ tile_map_data = PackedByteArray("AAAfAA8AAAAFAAIAAAAfABAAAAAFAAIAAAAfABEAAAAFAAI
 
 [node name="MiddleTilemap" parent="." index="2"]
 tile_map_data = PackedByteArray("AAApAA8AAAAPAAEAAAAfABAAAAALAAEAAAAgABAAAAALAAAAAAAhABAAAAALAAIAAAAgAA8AAAATAAIAAAAfAA8AAAATAAIAAAAhAA8AAAATAAIAAAAfABEAAAAUAAIAAAAgABEAAAAUAAIAAAAhABEAAAAUAAIAAAAkAA8AAAAcAAAAAAAlAA8AAAAdAAAAAAAjAA8AAAAeAAAAAAAmAA8AAAAfAAAAAAAjABQAAAAsAAsAAAAkABMAAAAcAAAAAAAkABUAAAAuABcAAAAlABUAAAAvABcAAAAmABUAAAAvABcAAAAjABUAAAAvABcAAAAiABUAAAAvABcAAAAhABUAAAAyABcAAAAmABQAAAAuABYAAAAmABMAAAAuABYAAAAmABIAAAA0ABcAAAAhABQAAAAyABcAAAAhABMAAAAyABcAAAAkABIAAAA0ABcAAAAjABIAAAA0ABcAAAAiABIAAAA0ABcAAAAlABIAAAA0ABcAAAAnABQAAAAzABcAAAAnABMAAAAzABcAAAAnABIAAAAzABcAAAAnABUAAAAzABcAAAAhABIAAAAyABcAAAAlABMAAAAeAAAAAAAiABMAAAAZAAMAAAA=")
+
+[node name="DoorComponent" parent="." index="5" instance=ExtResource("2_n2oli")]
+position = Vector2(513, 335)
+LeadsToPath = "res://scenes/rum/start_rum.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorComponent" index="0"]
+shape = SubResource("RectangleShape2D_vlum7")

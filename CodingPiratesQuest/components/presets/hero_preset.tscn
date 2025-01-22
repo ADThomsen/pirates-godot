@@ -1,16 +1,15 @@
-[gd_scene load_steps=32 format=3 uid="uid://cgl2k737wf62j"]
+[gd_scene load_steps=31 format=3 uid="uid://cgl2k737wf62j"]
 
-[ext_resource type="PackedScene" uid="uid://ct04wfqrn3ks4" path="res://components/health/health_component.tscn" id="1_n1xn2"]
 [ext_resource type="Script" path="res://components/presets/HeroPreset.cs" id="1_tfvfa"]
 [ext_resource type="Texture2D" uid="uid://dyk383wbyq7o0" path="res://assets/Adventurer Sprite Sheet v1.5.png" id="4_18e7q"]
 [ext_resource type="PackedScene" uid="uid://chjfrc3ljdqy6" path="res://components/hitbox/hitbox_component.tscn" id="4_f3pec"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_p10kr"]
-radius = 9.0
-height = 20.0
+radius = 4.0
+height = 8.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u8nhr"]
-radius = 7.0
+radius = 8.0
 height = 20.0
 
 [sub_resource type="Animation" id="Animation_6oq7f"]
@@ -42,6 +41,23 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [52, 61]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.733333, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"OnHeroAttackStarted"
+}, {
+"args": [],
+"method": &"OnHeroAttackEnded"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_37brn"]
@@ -185,7 +201,7 @@ advance_mode = 2
 states/End/position = Vector2(813, 59.44)
 states/Start/position = Vector2(182.5, 192)
 states/attack1/node = SubResource("AnimationNodeAnimation_vbo5p")
-states/attack1/position = Vector2(443.945, 47.3175)
+states/attack1/position = Vector2(444.883, 47.3175)
 states/attack2/node = SubResource("AnimationNodeAnimation_pue36")
 states/attack2/position = Vector2(640.32, 175.255)
 states/die/node = SubResource("AnimationNodeAnimation_i8amb")
@@ -197,18 +213,19 @@ states/idle/position = Vector2(445.82, 168.052)
 states/walk/node = SubResource("AnimationNodeAnimation_excjw")
 states/walk/position = Vector2(473.32, 280.005)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_5yipt"), "attack1", "idle", SubResource("AnimationNodeStateMachineTransition_fbr3n"), "attack2", "idle", SubResource("AnimationNodeStateMachineTransition_rn3jo"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_tcrs1"), "hurt", "idle", SubResource("AnimationNodeStateMachineTransition_u3vw8"), "idle", "attack1", SubResource("AnimationNodeStateMachineTransition_o4bw3"), "idle", "attack2", SubResource("AnimationNodeStateMachineTransition_h3iyr"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_ud8e7"), "idle", "hurt", SubResource("AnimationNodeStateMachineTransition_ff1fu"), "idle", "die", SubResource("AnimationNodeStateMachineTransition_fnvpp")]
-graph_offset = Vector2(125.82, 7.755)
+graph_offset = Vector2(69.4201, 42.6525)
 
 [node name="HeroPreset" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 27
 script = ExtResource("1_tfvfa")
-
-[node name="HealthComponent" parent="." instance=ExtResource("1_n1xn2")]
 
 [node name="HitboxComponent" parent="." instance=ExtResource("4_f3pec")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
-position = Vector2(-2, 5)
+position = Vector2(-2, 6)
 shape = SubResource("CapsuleShape2D_p10kr")
+debug_color = Color(0.962107, 3.46541e-06, 0.506495, 0.42)
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 position = Vector2(-2, 5)

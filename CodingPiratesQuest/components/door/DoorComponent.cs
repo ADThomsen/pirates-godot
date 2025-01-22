@@ -7,7 +7,7 @@ public partial class DoorComponent : Area2D
 	[Export]
 	public bool IsLocked { get; set; }
 	[Export]
-	public PackedScene LeadsTo { get; set; }
+	public string LeadsToPath { get; set; }
 	
 	public override void _Ready()
 	{
@@ -20,6 +20,6 @@ public partial class DoorComponent : Area2D
 
 	public void OnAreaEntered(Node2D node)
 	{
-		GetTree().CallDeferred("change_scene_to_packed", LeadsTo);
+		GetTree().CallDeferred("change_scene_to_file", LeadsToPath);
 	}
 }

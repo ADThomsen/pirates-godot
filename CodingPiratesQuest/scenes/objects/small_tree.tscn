@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://dxmoqbqgipmup"]
+
+[ext_resource type="Texture2D" uid="uid://bn33svsaimff4" path="res://assets/roguelikeSheet_transparent.png" id="1_shefq"]
+[ext_resource type="Script" path="res://scenes/objects/SmallTree.cs" id="2_a3ade"]
+[ext_resource type="PackedScene" uid="uid://ct04wfqrn3ks4" path="res://components/health/health_component.tscn" id="2_a74bs"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yk34n"]
+atlas = ExtResource("1_shefq")
+region = Rect2(221, 154, 16, 15)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_386ty"]
+radius = 3.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nwkbb"]
+size = Vector2(6, 9)
+
+[node name="SmallTree" type="Sprite2D"]
+texture = SubResource("AtlasTexture_yk34n")
+script = ExtResource("2_a3ade")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 4)
+shape = SubResource("CircleShape2D_386ty")
+
+[node name="HealthComponent" parent="." instance=ExtResource("2_a74bs")]
+Health = 20
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HealthComponent"]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_nwkbb")
+debug_color = Color(0.957107, 0.0285938, 0.519048, 0.42)
+
+[connection signal="Death" from="HealthComponent" to="." method="OnChoppedDown"]

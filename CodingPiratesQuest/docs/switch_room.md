@@ -19,7 +19,9 @@ Når du skal skifte fra ét rum til et andet, skal du gøre følgende:
 ![switch_room_4](./images/switch_room_4.png)
 
 6. Vælg igen DoorComponent i venstre side af Godot og klik på `Inspector` i højre side.
-7. Træk den scene du vil skifte til ind i feltet `Leads To`
+7. Skriv path til den scene du vil skifte til i feltet `Leads To Path`
+   - Du får den rigtige path ved at **højreklikke** på den scene du vil skifte til og klikke på `Copy Path`
+   - Sæt den derefter ind i feltet med `Ctrl + V` (eller `Cmd + V` på Mac)
 
 ![switch_room_5](./images/switch_room_5.png)
 
