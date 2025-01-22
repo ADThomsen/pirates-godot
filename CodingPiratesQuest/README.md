@@ -13,7 +13,7 @@ Er du klar til at starte dit eventyr? ⚔️🌟
 - [Installation](./docs/installation.md)
 - [Vælg din verden](./docs/sprites.md)
 - [Lav Collision Layers](./docs/add_layers.md)
-- [Opdater Components]()
+- [Opdater Components](./docs/update_components.md)
 - [Få spilleren til at angribe](./docs/player_attack_1.md)
 - [Tilføj et nyt rum](./docs/add_room.md)
 - [Skift rum](./docs/switch_room.md)
