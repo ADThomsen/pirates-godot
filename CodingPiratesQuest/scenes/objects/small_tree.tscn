@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scenes/objects/SmallTree.cs" id="2_a3ade"]
 [ext_resource type="PackedScene" uid="uid://ct04wfqrn3ks4" path="res://components/health/health_component.tscn" id="2_a74bs"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_yk34n"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_5u7m3"]
 atlas = ExtResource("1_shefq")
 region = Rect2(221, 154, 16, 15)
 
@@ -15,7 +15,7 @@ radius = 3.0
 size = Vector2(6, 9)
 
 [node name="SmallTree" type="Sprite2D"]
-texture = SubResource("AtlasTexture_yk34n")
+texture = SubResource("AtlasTexture_5u7m3")
 script = ExtResource("2_a3ade")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]

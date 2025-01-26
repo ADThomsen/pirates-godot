@@ -15,7 +15,6 @@ public partial class SmallTree : Sprite2D
 	
 	public void OnChoppedDown()
 	{
-		GD.Print("You chopped down the tree");
 		QueueFree();
 	}
 }

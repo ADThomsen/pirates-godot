@@ -18,4 +18,4 @@ Er du klar til at starte dit eventyr? ⚔️🌟
 - [Tilføj et nyt rum](./docs/add_room.md)
 - [Skift rum](./docs/switch_room.md)
 - [Lav et `Object` (fx et træ, der kan fældes)](./docs/create_object.md)
-- [Få spillere til at gøre noget ved et `Object` (fx at fælde et træ)](./docs/create_object.md)
+- [Få spillere til at "angribe" et `Object` (fx at fælde et træ)](./docs/attack_object.md)
