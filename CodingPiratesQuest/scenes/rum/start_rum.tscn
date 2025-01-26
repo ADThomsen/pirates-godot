@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=4 uid="uid://doxr4tfhh51m"]
+[gd_scene load_steps=8 format=4 uid="uid://doxr4tfhh51m"]
 
 [ext_resource type="PackedScene" uid="uid://rikoagpjivbv" path="res://components/presets/rum_preset.tscn" id="1_ftt0h"]
 [ext_resource type="PackedScene" uid="uid://iobvifyhcxgm" path="res://scenes/huse/hus.tscn" id="3_iykvd"]
 [ext_resource type="PackedScene" uid="uid://c4gxfeijck4ln" path="res://components/door/door_component.tscn" id="3_k5tya"]
-[ext_resource type="PackedScene" uid="uid://cyuyylk6wtlu2" path="res://scenes/rum/hus1_inde.tscn" id="4_h1gk0"]
 [ext_resource type="PackedScene" uid="uid://52nrgf5w2gk4" path="res://scenes/things/boat.tscn" id="5_1545l"]
 [ext_resource type="PackedScene" uid="uid://dxmoqbqgipmup" path="res://scenes/objects/small_tree.tscn" id="6_h0xcv"]
 
@@ -38,8 +37,7 @@ shape = SubResource("RectangleShape2D_yxhbf")
 position = Vector2(286, 256)
 
 [node name="DoorComponent" parent="Hus" index="3" instance=ExtResource("3_k5tya")]
-LeadsTo = ExtResource("4_h1gk0")
-Path = "res://scenes/rum/hus1_inde.tscn"
+LeadsToPath = "res://scenes/rum/hus1_inde.tscn"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hus/DoorComponent" index="0"]
 position = Vector2(1, 15.25)
