@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bo5lj14mtjvnj"]
+
+[ext_resource type="Script" path="res://components/spawn/SpawnComponent.cs" id="1_th84j"]
+
+[node name="SpawnComponent" type="Node2D"]
+script = ExtResource("1_th84j")

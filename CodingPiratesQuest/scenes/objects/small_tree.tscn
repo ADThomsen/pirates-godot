@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dxmoqbqgipmup"]
+[gd_scene load_steps=8 format=3 uid="uid://dxmoqbqgipmup"]
 
 [ext_resource type="Texture2D" uid="uid://bn33svsaimff4" path="res://assets/roguelikeSheet_transparent.png" id="1_shefq"]
 [ext_resource type="Script" path="res://scenes/objects/SmallTree.cs" id="2_a3ade"]
 [ext_resource type="PackedScene" uid="uid://ct04wfqrn3ks4" path="res://components/health/health_component.tscn" id="2_a74bs"]
+[ext_resource type="PackedScene" uid="uid://bo5lj14mtjvnj" path="res://components/spawn/spawn_component.tscn" id="4_mm610"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5u7m3"]
 atlas = ExtResource("1_shefq")
@@ -32,4 +33,8 @@ position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_nwkbb")
 debug_color = Color(0.957107, 0.0285938, 0.519048, 0.42)
 
+[node name="SpawnComponent" parent="." instance=ExtResource("4_mm610")]
+RespawnScenePath = "/Users/dkAndTho/code/pirates/pirates-godot/CodingPiratesQuest/scenes/objects/log_of_wood.tscn"
+
 [connection signal="Death" from="HealthComponent" to="." method="OnChoppedDown"]
+[connection signal="Death" from="HealthComponent" to="SpawnComponent" method="SpawnScene"]
