@@ -1,5 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://c5pyb6glj8lr"]
+[gd_scene load_steps=4 format=3 uid="uid://c5pyb6glj8lr"]
 
 [ext_resource type="PackedScene" uid="uid://cgl2k737wf62j" path="res://components/presets/hero_preset.tscn" id="1_k00yl"]
+[ext_resource type="PackedScene" uid="uid://b2mua7ptng0ed" path="res://components/interactions/interactor.tscn" id="2_3swvk"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kk6b5"]
 
 [node name="Hero2" instance=ExtResource("1_k00yl")]
+
+[node name="Interactor" parent="." index="5" instance=ExtResource("2_3swvk")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactor" index="0"]
+position = Vector2(-2, 4)
+shape = SubResource("CapsuleShape2D_kk6b5")
+debug_color = Color(0.640114, 0.517006, 0.25713, 0.42)

@@ -13,11 +13,9 @@ public partial class LogOfWood : Sprite2D
 	{
 	}
 	
-	public void OnBodyEntered(Node body)
+	public void PickedUp()
 	{
-		if (body is HeroPreset)
-		{
-			GD.Print("Player is here");
-		}
+		GD.Print("Picked Up Wood");
+		QueueFree();
 	}
 }

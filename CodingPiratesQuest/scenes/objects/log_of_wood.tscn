@@ -1,24 +1,23 @@
-[gd_scene load_steps=5 format=3 uid="uid://u02q0siayji1"]
+[gd_scene load_steps=6 format=3 uid="uid://u02q0siayji1"]
 
 [ext_resource type="Texture2D" uid="uid://bn33svsaimff4" path="res://assets/roguelikeSheet_transparent.png" id="1_slb8w"]
 [ext_resource type="Script" path="res://scenes/objects/LogOfWood.cs" id="2_5qf26"]
+[ext_resource type="PackedScene" uid="uid://deaus07svkg0w" path="res://components/interactions/interactable.tscn" id="3_l33m4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xfh0d"]
 atlas = ExtResource("1_slb8w")
 region = Rect2(699, 171, 13, 15)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_v7tn1"]
-radius = 6.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_qiieu"]
 
 [node name="LogOfWood" type="Sprite2D"]
 texture = SubResource("AtlasTexture_xfh0d")
 script = ExtResource("2_5qf26")
 
-[node name="StaticBody2D" type="Area2D" parent="."]
-collision_layer = 8
-collision_mask = 4
+[node name="Interactable" parent="." instance=ExtResource("3_l33m4")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-shape = SubResource("CircleShape2D_v7tn1")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactable"]
+shape = SubResource("CircleShape2D_qiieu")
+debug_color = Color(0.617732, 0.521509, 0.345937, 0.42)
 
-[connection signal="body_entered" from="StaticBody2D" to="." method="OnBodyEntered"]
+[connection signal="OnInteract" from="Interactable" to="." method="PickedUp"]

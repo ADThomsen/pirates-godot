@@ -52,3 +52,6 @@ collision_mask = 1
 
 [node name="SmallTree" parent="Trees" index="0" instance=ExtResource("6_h0xcv")]
 position = Vector2(227, 188)
+
+[node name="SmallTree" parent="." index="8" instance=ExtResource("6_h0xcv")]
+position = Vector2(215, 186)
