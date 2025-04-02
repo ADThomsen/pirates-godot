@@ -15,6 +15,7 @@ texture = SubResource("AtlasTexture_xfh0d")
 script = ExtResource("2_5qf26")
 
 [node name="Interactable" parent="." instance=ExtResource("3_l33m4")]
+InteractionText = "Pick up wood"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactable"]
 shape = SubResource("CircleShape2D_qiieu")

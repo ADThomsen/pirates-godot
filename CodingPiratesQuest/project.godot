@@ -15,6 +15,10 @@ run/main_scene="res://components/main_menu/main_menu.tscn"
 config/features=PackedStringArray("4.3", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+TooltipComponent="*res://components/tooltip/tooltip_component.tscn"
+
 [display]
 
 window/size/viewport_width=1200

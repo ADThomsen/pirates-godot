@@ -19,10 +19,12 @@ public partial class TooltipComponent : Control
     public void ShowInteractionHelp(string helpText)
     {
         PopupPanel popupPanel = GetNode<PopupPanel>("%InteractionHelp");
+        Label helpLabel = popupPanel.GetNode<Label>("%HelpText");
+        helpLabel.Text = helpText;
         popupPanel.Show();
     }
 
-    public void HideInteractionHelp(string helpText)
+    public void HideInteractionHelp()
     {
         PopupPanel popupPanel = GetNode<PopupPanel>("%InteractionHelp");
         popupPanel.Hide();

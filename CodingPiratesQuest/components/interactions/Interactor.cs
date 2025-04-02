@@ -22,6 +22,14 @@ public partial class Interactor : Area2D
 				CurrentInteractable.Interact();
 			}
 		}
+		if (CurrentInteractable != null)
+		{
+			TooltipComponent.Instance.ShowInteractionHelp(CurrentInteractable.InteractionText);
+		}
+		else
+		{
+			TooltipComponent.Instance.HideInteractionHelp();
+		}
 	}
 
 	public void OnAreaEntered(Node2D node)
@@ -29,7 +37,6 @@ public partial class Interactor : Area2D
 		if (node is Interactable interactable)
 		{
 			Interactables.Add(interactable);
-			TooltipComponent.Instance.ShowInteractionHelp("HIHIHI");
 		}
 	}
 
@@ -37,6 +44,7 @@ public partial class Interactor : Area2D
 	{
 		if (node is Interactable interactable)
 		{
+			
 			Interactables.Remove(interactable);
 		}
 	}

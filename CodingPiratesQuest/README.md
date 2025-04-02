@@ -20,3 +20,4 @@ Er du klar til at starte dit eventyr? ⚔️🌟
 - [Lav et `Object` (fx et træ, der kan fældes)](./docs/create_object.md)
 - [Få spillere til at "angribe" et `Object` (fx at fælde et træ)](./docs/attack_object.md)
 - [Få et nyt object til at spawne](./docs/spawn_object.md)
+- [Interact (åben kiste, sample op osv.)](./docs/interact.md)
